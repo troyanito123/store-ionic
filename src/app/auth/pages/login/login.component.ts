@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidatorService } from 'src/app/shared/services/validator.service';
 
 @Component({
   selector: 'app-login',
@@ -8,8 +9,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  emailPattern: string;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private validatorService: ValidatorService
+  ) {
+    this.emailPattern = validatorService.emailPattern;
     this.createForm();
   }
 
@@ -26,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
@@ -41,7 +47,7 @@ export class LoginComponent implements OnInit {
     const errors = this.loginForm.get('email').errors;
     if (errors?.required) {
       return 'Email es obligatorio';
-    } else if (errors?.email) {
+    } else if (errors?.pattern) {
       return 'Email debe ser valido';
     }
     return '';

@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,17 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.form {
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 1rem;
+  box-shadow: 1px 4px 8px 0px rgba(0, 0, 0, 0.3);
+  ion-item {
+    margin: 1rem;
+  }
+}
+
+.header {
+  text-align: center;
+}

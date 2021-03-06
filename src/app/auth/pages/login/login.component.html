@@ -1,0 +1,63 @@
+<div class="header">
+  <ion-text color="primary">
+    <h1>Ingreso</h1>
+  </ion-text>
+
+  <p>Acceda a nuestro sistema para poder tener una experiencia completa</p>
+</div>
+
+<div class="form">
+  <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="login()">
+    <ion-item>
+      <ion-label
+        *ngIf="!invalidField('email')"
+        color="primary"
+        position="floating"
+        >Email</ion-label
+      >
+      <ion-label
+        *ngIf="invalidField('email')"
+        color="danger"
+        position="floating"
+        >{{ invalidEmailMsg }}</ion-label
+      >
+      <ion-input
+        type="email"
+        formControlName="email"
+        placeholder="Email"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label
+        *ngIf="!invalidField('password')"
+        color="primary"
+        position="floating"
+        >Contraseña</ion-label
+      >
+      <ion-label
+        color="danger"
+        position="floating"
+        *ngIf="invalidField('password')"
+        >{{ invalidPasswordMsg }}</ion-label
+      >
+      <ion-input
+        type="password"
+        formControlName="password"
+        placeholder="Contraseña"
+      ></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" expand="block" fill="solid" shape="round">
+      Login
+    </ion-button>
+  </form>
+</div>
+
+<ion-button
+  routerLink="/auth/register"
+  expand="block"
+  fill="clear"
+  shape="round"
+>
+  Registrame
+</ion-button>

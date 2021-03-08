@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ValidatorService } from 'src/app/shared/services/validator.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +12,13 @@ import { ValidatorService } from 'src/app/shared/services/validator.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   emailPattern: string;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
-    private validatorService: ValidatorService
+    private validatorService: ValidatorService,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.emailPattern = validatorService.emailPattern;
     this.createForm();
@@ -27,13 +32,25 @@ export class LoginComponent implements OnInit {
       return;
     }
     const { email, password } = this.loginForm.value;
-    console.log(email, password);
+    this.isLoading = true;
+    this.authService.login(email, password).subscribe((success) => {
+      this.isLoading = false;
+      if (success) {
+        this.router.navigate(['home']);
+      } else {
+        //TODO: Show error login
+        console.log('credenciales incorrectas');
+      }
+    });
   }
 
   createForm() {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      email: [
+        'admin@test.com',
+        [Validators.required, Validators.pattern(this.emailPattern)],
+      ],
+      password: ['123123', [Validators.required, Validators.minLength(6)]],
     });
   }
 

@@ -47,8 +47,23 @@
       ></ion-input>
     </ion-item>
 
-    <ion-button type="submit" expand="block" fill="solid" shape="round">
+    <ion-button
+      type="submit"
+      expand="block"
+      fill="solid"
+      shape="round"
+      *ngIf="!isLoading"
+    >
       Login
+    </ion-button>
+    <ion-button
+      expand="block"
+      fill="solid"
+      shape="round"
+      *ngIf="isLoading"
+      disabled
+    >
+      Accediendo ...
     </ion-button>
   </form>
 </div>
@@ -56,7 +71,7 @@
 <ion-button
   routerLink="/auth/register"
   expand="block"
-  fill="clear"
+  fill="outline"
   shape="round"
 >
   Registrame

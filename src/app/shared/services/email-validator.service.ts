@@ -9,15 +9,15 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class EmailValidatorService {
-  url = `${environment.url}/user/email`;
+  url = `${environment.url}/validation/email`;
 
   constructor(private http: HttpClient) {}
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
     const email = control.value;
     return this.http
-      .post<{ exists: boolean }>(this.url, { email })
+      .post<boolean>(this.url, { email })
       .pipe(
-        map((resp) => (resp.exists ? { emailTaken: true } : null)),
+        map((resp) => (resp ? { emailTaken: true } : null)),
         catchError((err) => of({ emailTaken: true }))
       );
   }

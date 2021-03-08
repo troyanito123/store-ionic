@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { EmailValidatorService } from 'src/app/shared/services/email-validator.service';
+import { ValidatorService } from 'src/app/shared/services/validator.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -8,8 +12,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  emailPattern: string;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private emailValidatorService: EmailValidatorService,
+    private validatorService: ValidatorService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.emailPattern = this.validatorService.emailPattern;
     this.createForm();
   }
 
@@ -20,17 +33,35 @@ export class RegisterComponent implements OnInit {
       this.registerForm.markAllAsTouched();
       return;
     }
-    const { email, password } = this.registerForm.value;
-    console.log(email, password);
+    const { name, email, password } = this.registerForm.value;
+    this.isLoading = true;
+    this.authService.register(name, email, password).subscribe((success) => {
+      this.isLoading = false;
+      if (success) {
+        this.router.navigate(['home']);
+      } else {
+        // TODO: create mensaje de error en el registro
+        console.log('no se creo el usuario');
+      }
+    });
   }
 
-  createForm() {
-    this.registerForm = this.fb.group({
-      name: ['', Validators.required, Validators.minLength(2)],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      password2: ['', [Validators.required]],
-    });
+  private createForm() {
+    this.registerForm = this.fb.group(
+      {
+        name: ['test01', [Validators.required, Validators.minLength(2)]],
+        email: [
+          'test01@test.com',
+          [Validators.required, Validators.pattern(this.emailPattern)],
+          [this.emailValidatorService],
+        ],
+        password: ['123123', [Validators.required, Validators.minLength(6)]],
+        password2: ['123123', [Validators.required]],
+      },
+      {
+        validators: [this.validatorService.sameFields('password', 'password2')],
+      }
+    );
   }
 
   invalidField(field: string) {
@@ -56,6 +87,8 @@ export class RegisterComponent implements OnInit {
       return 'Email es obligatorio';
     } else if (errors?.email) {
       return 'Email debe ser valido';
+    } else if (errors?.emailTaken) {
+      return 'Email ya esta tomado';
     }
     return '';
   }
@@ -74,6 +107,8 @@ export class RegisterComponent implements OnInit {
     const errors = this.registerForm.get('password2').errors;
     if (errors?.required) {
       return 'Contraseña obligatoria';
+    } else if (errors?.noSame) {
+      return 'Las contraseñas no coinciden';
     }
     return '';
   }

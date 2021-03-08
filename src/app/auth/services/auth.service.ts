@@ -9,13 +9,23 @@ import { AuthReponse, User } from '../interfaces/interface';
   providedIn: 'root',
 })
 export class AuthService {
-  url = `${environment.url}/auth/login`;
+  url = `${environment.url}/auth`;
 
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string) {
     return this.http
-      .post<AuthReponse>(this.url, { email, password })
+      .post<AuthReponse>(`${this.url}/login`, { email, password })
+      .pipe(
+        tap((res) => this.saveUser(res)),
+        map(() => true),
+        catchError(() => of(false))
+      );
+  }
+
+  register(name: string, email: string, password: string) {
+    return this.http
+      .post<AuthReponse>(`${this.url}/register`, { name, email, password })
       .pipe(
         tap((res) => this.saveUser(res)),
         map(() => true),

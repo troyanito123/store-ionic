@@ -89,8 +89,26 @@
       ></ion-input>
     </ion-item>
 
-    <ion-button type="submit" expand="block" fill="solid" shape="round">
+    <ion-button
+      *ngIf="!isLoading"
+      type="submit"
+      expand="block"
+      fill="solid"
+      shape="round"
+      [disabled]="registerForm.pending"
+    >
       Registrarme
+    </ion-button>
+
+    <ion-button
+      *ngIf="isLoading"
+      type="submit"
+      expand="block"
+      fill="solid"
+      shape="round"
+      disabled
+    >
+      Registrando ...
     </ion-button>
   </form>
 </div>

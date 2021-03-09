@@ -11,6 +11,17 @@ import { AuthReponse, User } from '../interfaces/interface';
 export class AuthService {
   url = `${environment.url}/auth`;
 
+  private _user;
+  private _accessToken = '';
+
+  get user(): User | null {
+    return this._user;
+  }
+
+  get accesToken(): string | '' {
+    return this._accessToken;
+  }
+
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string) {
@@ -34,7 +45,8 @@ export class AuthService {
   }
 
   saveUser(res: AuthReponse) {
-    localStorage.setItem('user', JSON.stringify(res.data));
+    this._user = res.data;
+    this._accessToken = `Bearer ${res.access_token}`;
     localStorage.setItem('access_token', `Bearer ${res.access_token}`);
   }
 }

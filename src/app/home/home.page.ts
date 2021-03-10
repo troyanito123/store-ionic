@@ -26,16 +26,15 @@ export class HomePage implements OnInit, OnDestroy {
   async ngOnInit() {
     const loading = await this.createLoading();
     await loading.present();
-    this.cantInCart = this.cartService.cantInCart;
-    this.cantSubs = this.cartService.cantInCart$.subscribe(
-      (cant) => (this.cantInCart = cant)
-    );
+    this.cantInCart = Number(localStorage.getItem('cant'));
+    this.cantSubs = this.cartService.cantInCart$.subscribe((cant) => {
+      this.cantInCart = cant;
+    });
     this.productsSubs = this.productService
       .getProducts()
       .subscribe(async (products) => {
         await loading.dismiss();
         this.products = products;
-        console.log(products);
       });
   }
 

@@ -1,0 +1,10 @@
+.cost_conatainer {
+  display: flex;
+  flex-direction: column;
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: gray;
+  }
+}

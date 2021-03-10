@@ -5,7 +5,7 @@
       <ion-button>
         <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
       </ion-button>
-      <ion-button routerLink="/cart">
+      <ion-button routerLink="/cart" [disabled]="cantInCart < 1">
         <ion-icon slot="start" name="cart-outline"></ion-icon>
         <ion-badge color="primary">{{cantInCart}}</ion-badge>
       </ion-button>

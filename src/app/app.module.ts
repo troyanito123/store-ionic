@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddHeadersService } from './shared/services/add-headers.service';
+import { DomSanitizerPipe } from './pipes/dom-sanitizer.pipe';
 
 @NgModule({
   declarations: [AppComponent],

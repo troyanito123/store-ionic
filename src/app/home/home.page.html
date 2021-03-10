@@ -11,6 +11,9 @@
 
 <ion-content [fullscreen]="true">
   <div id="container">
-    <p>aqui mostrar los productos</p>
+    <app-product
+      [product]="product"
+      *ngFor="let product of products"
+    ></app-product>
   </div>
 </ion-content>

@@ -12,13 +12,13 @@ export class AuthService {
   url = `${environment.url}/auth`;
 
   private _user;
-  private _accessToken = '';
+  private _accessToken;
 
   get user(): User | null {
     return this._user;
   }
 
-  get accesToken(): string | '' {
+  get accesToken(): string | null {
     return this._accessToken;
   }
 
@@ -47,6 +47,7 @@ export class AuthService {
   saveUser(res: AuthReponse) {
     this._user = res.data;
     this._accessToken = `Bearer ${res.access_token}`;
+    localStorage.setItem('user', JSON.stringify(this._user));
     localStorage.setItem('access_token', `Bearer ${res.access_token}`);
   }
 }

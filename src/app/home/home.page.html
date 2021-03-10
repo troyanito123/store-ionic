@@ -2,8 +2,12 @@
   <ion-toolbar>
     <ion-title> Tiendita </ion-title>
     <ion-buttons slot="end">
-      <ion-button color="primary">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
+      <ion-button>
+        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button routerLink="/cart">
+        <ion-icon slot="start" name="cart-outline"></ion-icon>
+        <ion-badge color="primary">{{cantInCart}}</ion-badge>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -16,4 +20,10 @@
       *ngFor="let product of products"
     ></app-product>
   </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

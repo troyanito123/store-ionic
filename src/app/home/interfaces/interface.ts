@@ -8,6 +8,7 @@ export interface Product {
   unit: Unit;
   images: Image[];
   inCart: boolean;
+  cant: number;
 }
 
 export interface Image {

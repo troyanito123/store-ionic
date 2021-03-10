@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CartService } from 'src/app/cart/services/cart.service';
 import { Product } from '../../interfaces/interface';
 
 @Component({
@@ -14,15 +15,15 @@ export class ProductComponent implements OnInit {
     speed: 400,
   };
 
-  constructor() {}
+  constructor(private cartService: CartService) {}
 
   ngOnInit() {}
 
   addToCart() {
-    console.log(`Agregando el producto ${this.product.id}`);
+    this.cartService.addToCart(this.product);
   }
 
   removeToCart() {
-    console.log(`Quitando el producto ${this.product.id}`);
+    this.cartService.removeToCart(this.product.id);
   }
 }

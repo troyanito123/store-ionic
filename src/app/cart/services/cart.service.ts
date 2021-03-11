@@ -19,7 +19,7 @@ export class CartService {
   deleteProductFromCart$: EventEmitter<number> = new EventEmitter();
 
   get cart() {
-    return [...this._cart];
+    return this._cart;
   }
 
   get cantInCart() {

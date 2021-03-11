@@ -24,7 +24,7 @@
       <h1>Resumen del pedido</h1>
       <div>
         <p class="total">Total</p>
-        <p class="cost">{{cost | localMoney}}</p>
+        <p class="cost">{{ cost | localMoney }}</p>
       </div>
     </div>
     <ion-list>
@@ -41,9 +41,9 @@
         >Describe donde te llevaremos el pedido</ion-label
       >
       <ion-input class="input" [formControl]="addressField"></ion-input>
-      <span *ngIf="isInvalidAddress" class="error_field"
-        >{{errorLocationMsg}}</span
-      >
+      <span *ngIf="isInvalidAddress" class="error_field">{{
+        errorLocationMsg
+      }}</span>
     </ion-item>
   </div>
   <app-map></app-map>

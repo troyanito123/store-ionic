@@ -6,16 +6,16 @@ import {
   LoadingController,
   ToastController,
 } from '@ionic/angular';
-import { CartService } from '../cart/services/cart.service';
-import { Product } from '../home/interfaces/interface';
-import { OrderService } from './service/order.service';
+import { CartService } from 'src/app/cart/services/cart.service';
+import { Product } from '../../../home/interfaces/interface';
+import { OrderService } from '../../services/order.service';
 
 @Component({
-  selector: 'app-send-order',
-  templateUrl: './send-order.page.html',
-  styleUrls: ['./send-order.page.scss'],
+  selector: 'app-order-send',
+  templateUrl: './order-send.component.html',
+  styleUrls: ['./order-send.component.scss'],
 })
-export class SendOrderPage implements OnInit {
+export class OrderSendComponent implements OnInit {
   products: Product[] = [];
   cost = 0;
   location: string;
@@ -68,6 +68,7 @@ export class SendOrderPage implements OnInit {
         loading.dismiss();
         if (success) {
           this.cartService.deleteCart();
+          this.addressField.reset();
           this.router.navigate(['/home']).then(async () => {
             const toast = await this.createToast(
               'Tu pedido esta siendo procesado!'

@@ -20,15 +20,6 @@ const routes: Routes = [
       import('./cart/cart.module').then((m) => m.CartPageModule),
   },
   {
-    path: 'send-order',
-    loadChildren: () =>
-      import('./send-order/send-order.module').then(
-        (m) => m.SendOrderPageModule
-      ),
-    canActivate: [HomeGuard],
-    canLoad: [HomeGuard],
-  },
-  {
     path: 'orders',
     loadChildren: () =>
       import('./orders/orders.module').then((m) => m.OrdersPageModule),

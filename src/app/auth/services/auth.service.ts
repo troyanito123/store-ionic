@@ -15,14 +15,17 @@ export class AuthService {
   private _accessToken;
 
   get user(): User | null {
-    return this._user;
+    return { ...this._user };
   }
 
   get accesToken(): string | null {
     return this._accessToken;
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this._user = localStorage.getItem('user') || null;
+    this._accessToken = localStorage.getItem('access_token') || null;
+  }
 
   login(email: string, password: string) {
     return this.http
@@ -49,5 +52,12 @@ export class AuthService {
     this._accessToken = `Bearer ${res.access_token}`;
     localStorage.setItem('user', JSON.stringify(this._user));
     localStorage.setItem('access_token', `Bearer ${res.access_token}`);
+  }
+
+  deleteUser() {
+    this._user = null;
+    this._accessToken = null;
+    localStorage.removeItem('user');
+    localStorage.removeItem('access_token');
   }
 }

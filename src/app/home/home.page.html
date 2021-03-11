@@ -2,10 +2,12 @@
   <ion-toolbar>
     <ion-title> Tiendita </ion-title>
     <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      <ion-button routerLink="/orders">
+        <ion-icon slot="start" name="list-circle-outline"></ion-icon>
+        Pedidos
+        <ion-badge color="primary">5</ion-badge>
       </ion-button>
-      <ion-button routerLink="/cart" [disabled]="cantInCart < 1">
+      <ion-button routerLink="/cart">
         <ion-icon slot="start" name="cart-outline"></ion-icon>
         <ion-badge color="primary">{{cantInCart}}</ion-badge>
       </ion-button>

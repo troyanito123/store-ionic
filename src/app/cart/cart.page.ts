@@ -15,12 +15,11 @@ export class CartPage implements OnInit, OnDestroy {
   costSub: Subscription;
   deleteProductFromCartSubs: Subscription;
 
-  constructor(private cartService: CartService) {
-    this.cost = Number(localStorage.getItem('cost')) || 0;
-  }
+  constructor(private cartService: CartService) {}
 
   ngOnInit() {
     this.products = this.cartService.cart;
+    this.cost = this.cartService.costCart;
     this.costSub = this.cartService.costOfCart$.subscribe((cost) => {
       this.cost = cost;
     });

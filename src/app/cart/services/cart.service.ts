@@ -12,6 +12,8 @@ export class CartService {
 
   private _costCart = 0;
 
+  private _location;
+
   cantInCart$: EventEmitter<number> = new EventEmitter();
   costOfCart$: EventEmitter<number> = new EventEmitter();
   deleteProductFromCart$: EventEmitter<number> = new EventEmitter();
@@ -27,10 +29,15 @@ export class CartService {
     return this._costCart;
   }
 
+  get location() {
+    return this._location;
+  }
+
   constructor() {
     this._cart = JSON.parse(localStorage.getItem('cart')) || [];
     this._cantInCart = Number(localStorage.getItem('cant') || 0);
     this._costCart = Number(localStorage.getItem('cost') || 0);
+    this._location = localStorage.getItem('location') || null;
   }
 
   addToCart(product: Product) {
@@ -99,16 +106,28 @@ export class CartService {
     this.saveCartToStorage();
   }
 
+  setLocation(location: string) {
+    localStorage.setItem('location', location);
+    this._location = location;
+  }
+
+  deleteCart() {
+    this._cart = [];
+    localStorage.removeItem('location');
+    this._location = null;
+    this.saveCartToStorage();
+  }
+
   private saveCartToStorage() {
-    const count = this._cart.reduce((counter, p) => counter + p.cant, 0);
-    const cost = this._cart.reduce(
+    this._cantInCart = this._cart.reduce((counter, p) => counter + p.cant, 0);
+    this._costCart = this._cart.reduce(
       (counter, p) => counter + p.cant * p.price,
       0
     );
-    this.costOfCart$.emit(cost);
-    this.cantInCart$.emit(count);
+    this.costOfCart$.emit(this._costCart);
+    this.cantInCart$.emit(this.cantInCart);
     localStorage.setItem('cart', JSON.stringify(this._cart));
-    localStorage.setItem('cant', count.toString());
-    localStorage.setItem('cost', cost.toString());
+    localStorage.setItem('cant', this._cantInCart.toString());
+    localStorage.setItem('cost', this.costCart.toString());
   }
 }

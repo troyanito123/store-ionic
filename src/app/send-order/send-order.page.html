@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cart"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Para donde?</ion-title>
+    <ion-buttons slot="end">
+      <ion-button
+        (click)="sendOrder()"
+        fill="solid"
+        color="tertiary"
+        shape="round"
+      >
+        <ion-icon slot="end" name="send"></ion-icon>
+        Pedir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="resumen">
+    <div class="title_container">
+      <h1>Resumen del pedido</h1>
+      <div>
+        <p class="total">Total</p>
+        <p class="cost">{{cost | localMoney}}</p>
+      </div>
+    </div>
+    <ion-list>
+      <app-detail
+        [product]="product"
+        *ngFor="let product of products"
+      ></app-detail>
+    </ion-list>
+  </div>
+
+  <div class="input_container">
+    <ion-item>
+      <ion-label position="floating"
+        >Describe donde te llevaremos el pedido</ion-label
+      >
+      <ion-input class="input" [formControl]="addressField"></ion-input>
+      <span *ngIf="isInvalidAddress" class="error_field"
+        >{{errorLocationMsg}}</span
+      >
+    </ion-item>
+  </div>
+  <app-map></app-map>
+</ion-content>

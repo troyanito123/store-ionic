@@ -1,0 +1,21 @@
+<div class="detail_container">
+  <div class="detail">
+    <div class="detail_img">
+      <ion-avatar>
+        <img [src]="product.images[0].url" />
+      </ion-avatar>
+    </div>
+    <div class="detail_text">
+      <ion-label>
+        <h2>{{ product.cant }} {{ product.name }}</h2>
+        <h3>{{ product | priceForUnit }}</h3>
+      </ion-label>
+    </div>
+  </div>
+
+  <div>
+    <h3 class="subtotal">
+      {{ product.cant * product.price | currency: "Bs. " }}
+    </h3>
+  </div>
+</div>

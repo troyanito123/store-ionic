@@ -1,0 +1,42 @@
+.title_container {
+  display: flex;
+  justify-content: space-around;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    p {
+      margin: 4px;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+.cost {
+  color: #2e42f2;
+}
+
+.total {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: gray;
+}
+
+.input_container {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  box-shadow: 1px 4px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+.resumen {
+  margin: 0.5rem 1rem;
+  border-radius: 1rem;
+  box-shadow: 1px 4px 8px 0px rgba(0, 0, 0, 0.3);
+}
+
+.error_field {
+  color: rgb(105, 104, 104) (63, 63, 63);
+}

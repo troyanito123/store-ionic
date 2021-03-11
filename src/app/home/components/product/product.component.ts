@@ -11,7 +11,7 @@ export class ProductComponent implements OnInit {
   @Input() product: Product;
 
   slideOpts = {
-    initialSlide: 1,
+    initialSlide: 0,
     speed: 400,
   };
 

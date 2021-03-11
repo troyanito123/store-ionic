@@ -1,0 +1,16 @@
+.detail_container {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1rem;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+}
+
+.subtotal {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2e42f2;
+}

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { OrderFull } from '../../interfaces/interfaces';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-order',
@@ -6,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  order: OrderFull;
 
-  constructor() { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private orderService: OrderService
+  ) {}
 
-  ngOnInit() {}
-
+  ngOnInit() {
+    this.activatedRoute.params
+      .pipe(switchMap(({ id }) => this.orderService.getOrder(id)))
+      .subscribe((order) => {
+        this.order = order;
+        console.log(this.order);
+      });
+  }
 }

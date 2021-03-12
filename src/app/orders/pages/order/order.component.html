@@ -1,3 +1,29 @@
-<p>
-  order works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/orders/list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Orden numero 01</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="order">
+    <app-map [lockLocation]="order.location"></app-map>
+
+    <app-detail
+      [product]="detail.product"
+      [cant]="detail.cant"
+      *ngFor="let detail of order.details"
+    ></app-detail>
+
+    <div class="total">
+      <h1>Total</h1>
+      <h2>{{ order.total | currency: "Bs. " }}</h2>
+    </div>
+
+    <div>
+      <p *ngFor="let msg of order.messages">{{ msg.body }}</p>
+    </div>
+  </div>
+</ion-content>

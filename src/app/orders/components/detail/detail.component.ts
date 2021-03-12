@@ -8,6 +8,7 @@ import { Product } from 'src/app/home/interfaces/interface';
 })
 export class DetailComponent implements OnInit {
   @Input() product: Product;
+  @Input() cant: number;
 
   constructor() {}
 

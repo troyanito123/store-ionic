@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from 'src/app/auth/interfaces/interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Product } from 'src/app/home/interfaces/interface';
-import { Order } from 'src/app/orders/interfaces/interfaces';
+import { Order, OrderFull } from 'src/app/orders/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -47,5 +47,11 @@ export class OrderService {
     return this.http
       .get<Order[]>(`${this.url}/user`)
       .pipe(catchError(() => of([])));
+  }
+
+  getOrder(orderId: number): Observable<OrderFull | null> {
+    return this.http
+      .get<OrderFull>(`${this.url}/${orderId}`)
+      .pipe(catchError(() => of(null)));
   }
 }

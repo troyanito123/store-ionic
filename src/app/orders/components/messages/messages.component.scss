@@ -1,0 +1,47 @@
+.messages_container {
+  box-shadow: 1px 4px 8px 0px rgba(0, 0, 0, 0.3);
+  margin: 0.5rem 1rem;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  h1 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.message {
+  background-color: rgb(224, 224, 224);
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  margin-bottom: 0.5rem;
+  h2,
+  p {
+    margin: 0;
+    padding: 0;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+}
+
+.left {
+  margin-right: 4rem;
+}
+
+.right {
+  margin-left: 4rem;
+  p {
+    text-align: right;
+  }
+}
+
+.time {
+  font-size: 0.7rem;
+  color: gray;
+}
+
+.send_message_container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}

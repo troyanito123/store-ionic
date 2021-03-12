@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
 import { OrderFull } from '../../interfaces/interfaces';
 import { OrderService } from '../../services/order.service';
@@ -14,15 +15,30 @@ export class OrderComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private loadingController: LoadingController
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    const loading = await this.createLoading();
+    loading.present();
     this.activatedRoute.params
       .pipe(switchMap(({ id }) => this.orderService.getOrder(id)))
       .subscribe((order) => {
+        loading.dismiss();
         this.order = order;
         console.log(this.order);
       });
+  }
+
+  changeDelivered(event: any) {
+    console.log(event.detail.checked);
+  }
+
+  createLoading() {
+    return this.loadingController.create({
+      message: 'Cargando datos, espere por favor',
+      backdropDismiss: false,
+    });
   }
 }

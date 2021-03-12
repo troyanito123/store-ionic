@@ -1,123 +1,125 @@
-<div class="header">
-  <ion-text color="primary">
-    <h1>Registro</h1>
-  </ion-text>
+<ion-content>
+  <div class="header">
+    <ion-text color="primary">
+      <h1>Registro</h1>
+    </ion-text>
 
-  <p>
-    Ingrese sus datos para poder tener una experiencia completa en nuestro
-    sistema
-  </p>
-</div>
+    <p>
+      Ingrese sus datos para poder tener una experiencia completa en nuestro
+      sistema
+    </p>
+  </div>
 
-<div class="form">
-  <form [formGroup]="registerForm" autocomplete="off" (ngSubmit)="register()">
-    <ion-item>
-      <ion-label
-        *ngIf="!invalidField('name')"
-        color="primary"
-        position="floating"
-        >Nombre</ion-label
-      >
-      <ion-label
-        *ngIf="invalidField('name')"
-        color="danger"
-        position="floating"
-        >{{ invalidNameMsg }}</ion-label
-      >
-      <ion-input
-        type="name"
-        formControlName="name"
-        placeholder="Nombre"
-      ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label
-        *ngIf="!invalidField('email')"
-        color="primary"
-        position="floating"
-        >Email</ion-label
-      >
-      <ion-label
-        *ngIf="invalidField('email')"
-        color="danger"
-        position="floating"
-        >{{ invalidEmailMsg }}</ion-label
-      >
-      <ion-input
-        type="email"
-        formControlName="email"
-        placeholder="Email"
-      ></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label
-        *ngIf="!invalidField('password')"
-        color="primary"
-        position="floating"
-        >Contraseña</ion-label
-      >
-      <ion-label
-        color="danger"
-        position="floating"
-        *ngIf="invalidField('password')"
-        >{{ invalidPasswordMsg }}</ion-label
-      >
-      <ion-input
-        type="password"
-        formControlName="password"
-        placeholder="Contraseña"
-      ></ion-input>
-    </ion-item>
+  <div class="form">
+    <form [formGroup]="registerForm" autocomplete="off" (ngSubmit)="register()">
+      <ion-item>
+        <ion-label
+          *ngIf="!invalidField('name')"
+          color="primary"
+          position="floating"
+          >Nombre</ion-label
+        >
+        <ion-label
+          *ngIf="invalidField('name')"
+          color="danger"
+          position="floating"
+          >{{ invalidNameMsg }}</ion-label
+        >
+        <ion-input
+          type="name"
+          formControlName="name"
+          placeholder="Nombre"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label
+          *ngIf="!invalidField('email')"
+          color="primary"
+          position="floating"
+          >Email</ion-label
+        >
+        <ion-label
+          *ngIf="invalidField('email')"
+          color="danger"
+          position="floating"
+          >{{ invalidEmailMsg }}</ion-label
+        >
+        <ion-input
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label
+          *ngIf="!invalidField('password')"
+          color="primary"
+          position="floating"
+          >Contraseña</ion-label
+        >
+        <ion-label
+          color="danger"
+          position="floating"
+          *ngIf="invalidField('password')"
+          >{{ invalidPasswordMsg }}</ion-label
+        >
+        <ion-input
+          type="password"
+          formControlName="password"
+          placeholder="Contraseña"
+        ></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label
-        *ngIf="!invalidField('password2')"
-        color="primary"
-        position="floating"
-        >Repita su Contraseña</ion-label
+      <ion-item>
+        <ion-label
+          *ngIf="!invalidField('password2')"
+          color="primary"
+          position="floating"
+          >Repita su Contraseña</ion-label
+        >
+        <ion-label
+          color="danger"
+          position="floating"
+          *ngIf="invalidField('password2')"
+          >{{ invalidPassword2Msg }}</ion-label
+        >
+        <ion-input
+          type="password"
+          formControlName="password2"
+          placeholder="Repita su contraseña"
+        ></ion-input>
+      </ion-item>
+
+      <ion-button
+        *ngIf="!isLoading"
+        type="submit"
+        expand="block"
+        fill="solid"
+        shape="round"
+        [disabled]="registerForm.pending"
       >
-      <ion-label
-        color="danger"
-        position="floating"
-        *ngIf="invalidField('password2')"
-        >{{ invalidPassword2Msg }}</ion-label
+        Registrarme
+      </ion-button>
+
+      <ion-button
+        *ngIf="isLoading"
+        type="submit"
+        expand="block"
+        fill="solid"
+        shape="round"
+        disabled
       >
-      <ion-input
-        type="password"
-        formControlName="password2"
-        placeholder="Repita su contraseña"
-      ></ion-input>
-    </ion-item>
+        Registrando ...
+      </ion-button>
+    </form>
+  </div>
 
-    <ion-button
-      *ngIf="!isLoading"
-      type="submit"
-      expand="block"
-      fill="solid"
-      shape="round"
-      [disabled]="registerForm.pending"
-    >
-      Registrarme
-    </ion-button>
-
-    <ion-button
-      *ngIf="isLoading"
-      type="submit"
-      expand="block"
-      fill="solid"
-      shape="round"
-      disabled
-    >
-      Registrando ...
-    </ion-button>
-  </form>
-</div>
-
-<ion-button
-  routerLink="/auth/login"
-  expand="block"
-  fill="outline"
-  shape="round"
->
-  Login
-</ion-button>
+  <ion-button
+    routerLink="/auth/login"
+    expand="block"
+    fill="outline"
+    shape="round"
+  >
+    Login
+  </ion-button>
+</ion-content>

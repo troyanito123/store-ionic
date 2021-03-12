@@ -4,12 +4,24 @@
       <ion-back-button defaultHref="/orders/list"></ion-back-button>
     </ion-buttons>
     <ion-title>Orden numero 01</ion-title>
+
+    <ion-buttons slot="end" *ngIf="order">
+      <ion-label>Pendiente</ion-label>
+      <ion-spinner name="bubbles"></ion-spinner>
+      <ion-toggle
+        [checked]="order.delivered"
+        (ionChange)="changeDelivered($event)"
+      ></ion-toggle>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div *ngIf="order">
     <app-map [lockLocation]="order.location"></app-map>
+    <div class="description">
+      <p><strong>Descripcion: </strong> {{ order.address }}</p>
+    </div>
 
     <app-detail
       [product]="detail.product"
@@ -22,8 +34,9 @@
       <h2>{{ order.total | currency: "Bs. " }}</h2>
     </div>
 
-    <div>
-      <p *ngFor="let msg of order.messages">{{ msg.body }}</p>
-    </div>
+    <app-messages
+      [messages]="order.messages"
+      [orderId]="order.id"
+    ></app-messages>
   </div>
 </ion-content>

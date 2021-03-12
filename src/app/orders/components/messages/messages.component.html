@@ -1,0 +1,23 @@
+<div class="messages_container">
+  <h1>Mensajes:</h1>
+
+  <div
+    *ngFor="let message of messages"
+    [ngClass]="{ left: message.isAdmin, right: !message.isAdmin }"
+    class="message"
+  >
+    <h2 *ngIf="message.isAdmin">Admin dice:</h2>
+    <p>{{ message.body }}</p>
+    <p class="time">{{ message.created_at | date: "mediumTime" }}</p>
+  </div>
+
+  <div class="send_message_container">
+    <ion-item>
+      <ion-label position="floating">Envia tu mensaje</ion-label>
+      <ion-input [formControl]="messageFiled"></ion-input>
+    </ion-item>
+    <ion-fab-button (click)="sendMessage()">
+      <ion-icon name="send"></ion-icon>
+    </ion-fab-button>
+  </div>
+</div>

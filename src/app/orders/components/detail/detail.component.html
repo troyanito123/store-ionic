@@ -15,7 +15,7 @@
 
   <div>
     <h3 class="subtotal">
-      {{ product.cant || cant * product.price | currency: "Bs. " }}
+      {{ (product.cant || cant) * product.price | currency: "Bs. " }}
     </h3>
   </div>
 </div>

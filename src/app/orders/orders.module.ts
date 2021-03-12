@@ -13,6 +13,7 @@ import { OrderComponent } from './pages/order/order.component';
 import { OrderSendComponent } from './pages/order-send/order-send.component';
 import { MapComponent } from './components/map/map.component';
 import { DetailComponent } from './components/detail/detail.component';
+import { MessagesComponent } from './components/messages/messages.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { DetailComponent } from './components/detail/detail.component';
     OrderComponent,
     MapComponent,
     DetailComponent,
+    MessagesComponent,
   ],
 })
 export class OrdersPageModule {}

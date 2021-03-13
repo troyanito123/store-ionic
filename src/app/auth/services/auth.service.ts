@@ -23,7 +23,7 @@ export class AuthService {
   }
 
   constructor(private http: HttpClient) {
-    this._user = localStorage.getItem('user') || null;
+    this._user = JSON.parse(localStorage.getItem('user')) || null;
     this._accessToken = localStorage.getItem('access_token') || null;
   }
 

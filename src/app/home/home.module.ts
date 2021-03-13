@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
-import { ProductComponent } from './components/product/product.component';
+import { ProductHomeComponent } from './components/product/product-home.component';
 import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
@@ -16,6 +16,6 @@ import { PipesModule } from '../pipes/pipes.module';
     HomePageRoutingModule,
     PipesModule,
   ],
-  declarations: [HomePage, ProductComponent],
+  declarations: [HomePage, ProductHomeComponent],
 })
 export class HomePageModule {}

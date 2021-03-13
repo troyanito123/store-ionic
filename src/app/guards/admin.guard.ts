@@ -4,14 +4,14 @@ import { CanActivate, CanLoad, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { environment } from 'src/environments/environment';
 import { AuthReponse } from '../auth/interfaces/interface';
 import { AuthService } from '../auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HomeGuard implements CanActivate, CanLoad {
+export class AdminGuard implements CanActivate, CanLoad {
   url = `${environment.url}/auth/renew`;
 
   constructor(
@@ -21,10 +21,22 @@ export class HomeGuard implements CanActivate, CanLoad {
     private toastController: ToastController
   ) {}
 
-  canActivate(): Observable<boolean> | boolean {
+  canLoad(): boolean | Observable<boolean> {
     return this.http.get<AuthReponse>(this.url).pipe(
       tap((res) => this.authService.saveUser(res)),
-      map(() => true),
+      map((res) => {
+        if (res.data.role !== 'ADMIN') {
+          this.router.navigate(['/home']).then(async () => {
+            const toast = await this.toastController.create({
+              message: 'No tienes los privilegios para ingresar a esa ruta!',
+              duration: 2500,
+            });
+            toast.present();
+          });
+          return false;
+        }
+        return true;
+      }),
       catchError(() => {
         this.authService.deleteUser();
         this.router.navigate(['/auth']).then(async () => {
@@ -39,10 +51,23 @@ export class HomeGuard implements CanActivate, CanLoad {
       })
     );
   }
-  canLoad(): Observable<boolean> | boolean {
+
+  canActivate(): Observable<boolean> | boolean {
     return this.http.get<AuthReponse>(this.url).pipe(
       tap((res) => this.authService.saveUser(res)),
-      map(() => true),
+      map((res) => {
+        if (res.data.role !== 'ADMIN') {
+          this.router.navigate(['/home']).then(async () => {
+            const toast = await this.toastController.create({
+              message: 'No tienes los privilegios para ingresar a esa ruta!',
+              duration: 2500,
+            });
+            toast.present();
+          });
+          return false;
+        }
+        return true;
+      }),
       catchError(() => {
         this.authService.deleteUser();
         this.router.navigate(['/auth']).then(async () => {

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/services/auth.service';
 import { CartService } from '../cart/services/cart.service';
 import { Product } from './interfaces/interface';
 import { ProductService } from './services/product.service';
@@ -20,7 +21,8 @@ export class HomePage implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private loadingController: LoadingController,
-    private cartService: CartService
+    private cartService: CartService,
+    private authService: AuthService
   ) {}
 
   async ngOnInit() {
@@ -48,5 +50,9 @@ export class HomePage implements OnInit, OnDestroy {
       message: 'Cargando productos ...',
       backdropDismiss: false,
     });
+  }
+
+  get isAdmin() {
+    return this.authService.isAdmin();
   }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from './guards/admin.guard';
 import { HomeGuard } from './guards/home.guard';
 
 const routes: Routes = [
@@ -25,6 +26,13 @@ const routes: Routes = [
       import('./orders/orders.module').then((m) => m.OrdersPageModule),
     canActivate: [HomeGuard],
     canLoad: [HomeGuard],
+  },
+  {
+    path: 'products',
+    loadChildren: () =>
+      import('./products/products.module').then((m) => m.ProductsPageModule),
+    canActivate: [AdminGuard],
+    canLoad: [AdminGuard],
   },
 ];
 

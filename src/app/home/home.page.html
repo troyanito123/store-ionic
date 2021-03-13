@@ -17,15 +17,15 @@
 
 <ion-content [fullscreen]="true">
   <div id="container">
-    <app-product
+    <app-product-home
       [product]="product"
       *ngFor="let product of products"
-    ></app-product>
+    ></app-product-home>
   </div>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="add"></ion-icon>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="isAdmin">
+    <ion-fab-button routerLink="/products">
+      <ion-icon name="build-outline"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

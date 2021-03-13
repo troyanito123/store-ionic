@@ -3,11 +3,11 @@ import { CartService } from 'src/app/cart/services/cart.service';
 import { Product } from '../../interfaces/interface';
 
 @Component({
-  selector: 'app-product',
-  templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss'],
+  selector: 'app-product-home',
+  templateUrl: './product-home.component.html',
+  styleUrls: ['./product-home.component.scss'],
 })
-export class ProductComponent implements OnInit {
+export class ProductHomeComponent implements OnInit {
   @Input() product: Product;
 
   slideOpts = {

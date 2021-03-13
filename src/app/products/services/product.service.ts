@@ -16,4 +16,10 @@ export class ProductService {
   getProducts() {
     return this.http.get<Product[]>(this._url).pipe(catchError(() => of([])));
   }
+
+  getProductForAdmin() {
+    return this.http
+      .get<Product[]>(`${this._url}/admin/all`)
+      .pipe(catchError(() => of([])));
+  }
 }

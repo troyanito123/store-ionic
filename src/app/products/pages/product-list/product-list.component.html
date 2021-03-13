@@ -1,10 +1,30 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
     <ion-title>Lista de productos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item
+      routerLink="/products/product/{{ product.id }}"
+      detail
+      *ngFor="let product of products"
+    >
+      <ion-avatar>
+        <img [src]="product?.images[0]?.url" />
+      </ion-avatar>
+      <ion-label
+        ><h2>{{ product.name }}</h2>
+        <h3>{{ product.price | currency: "Bs " }}</h3>
+        <p>{{ product.description }}.</p></ion-label
+      >
+    </ion-item>
+  </ion-list>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="/products/new">
       <ion-icon name="add"></ion-icon>

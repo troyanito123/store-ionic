@@ -3,8 +3,8 @@ import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/services/auth.service';
 import { CartService } from '../cart/services/cart.service';
-import { Product } from './interfaces/interface';
-import { ProductService } from './services/product.service';
+import { ProductService } from '../products/services/product.service';
+import { Product } from '../products/interfaces/interface';
 
 @Component({
   selector: 'app-home',

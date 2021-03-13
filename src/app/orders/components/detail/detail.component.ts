@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Product } from 'src/app/home/interfaces/interface';
+import { Product } from 'src/app/products/interfaces/interface';
 
 @Component({
   selector: 'app-detail',

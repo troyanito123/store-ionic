@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { switchMap } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { OrderFull } from '../../interfaces/interfaces';
 import { OrderService } from '../../services/order.service';
 
@@ -12,11 +13,13 @@ import { OrderService } from '../../services/order.service';
 })
 export class OrderComponent implements OnInit {
   order: OrderFull;
+  isLoading = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private loadingController: LoadingController,
     private orderService: OrderService,
-    private loadingController: LoadingController
+    private authService: AuthService
   ) {}
 
   async ngOnInit() {
@@ -32,7 +35,17 @@ export class OrderComponent implements OnInit {
   }
 
   changeDelivered(event: any) {
-    console.log(event.detail.checked);
+    this.isLoading = true;
+    const delivered = event.detail.checked;
+    this.orderService
+      .changeDelivered(this.order.id, delivered)
+      .subscribe((order) => {
+        this.isLoading = false;
+        console.log(order);
+        if (order) {
+          this.order.delivered = order.delivered;
+        }
+      });
   }
 
   createLoading() {
@@ -40,5 +53,9 @@ export class OrderComponent implements OnInit {
       message: 'Cargando datos, espere por favor',
       backdropDismiss: false,
     });
+  }
+
+  get isAdmin() {
+    return this.authService.isAdmin();
   }
 }

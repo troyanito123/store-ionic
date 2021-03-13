@@ -54,4 +54,13 @@ export class OrderService {
       .get<OrderFull>(`${this.url}/${orderId}`)
       .pipe(catchError(() => of(null)));
   }
+
+  changeDelivered(
+    orderId: number,
+    delivered: boolean
+  ): Observable<Order | null> {
+    return this.http
+      .post<Order>(`${this.url}/delivered`, { orderId, delivered })
+      .pipe(catchError(() => of(null)));
+  }
 }

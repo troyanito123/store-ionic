@@ -3,12 +3,13 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/orders/list"></ion-back-button>
     </ion-buttons>
-    <ion-title>Orden numero 01</ion-title>
+    <ion-title *ngIf="order">Orden numero {{ order.id }}</ion-title>
 
-    <ion-buttons slot="end" *ngIf="order">
+    <ion-buttons slot="end" *ngIf="order && isAdmin">
       <ion-label>Pendiente</ion-label>
-      <ion-spinner name="bubbles"></ion-spinner>
+      <ion-spinner name="bubbles" *ngIf="isLoading"></ion-spinner>
       <ion-toggle
+        [disabled]="isLoading"
         [checked]="order.delivered"
         (ionChange)="changeDelivered($event)"
       ></ion-toggle>
@@ -37,6 +38,7 @@
     <app-messages
       [messages]="order.messages"
       [orderId]="order.id"
+      [delivered]="order.delivered"
     ></app-messages>
   </div>
 </ion-content>

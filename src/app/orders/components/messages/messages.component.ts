@@ -11,6 +11,7 @@ import { MessageService } from '../../services/message.service';
 export class MessagesComponent implements OnInit {
   @Input() messages: Message[];
   @Input() orderId: number;
+  @Input() delivered: boolean;
 
   messageFiled = new FormControl('', [Validators.required]);
 

@@ -60,4 +60,8 @@ export class AuthService {
     localStorage.removeItem('user');
     localStorage.removeItem('access_token');
   }
+
+  isAdmin() {
+    return this._user.role === 'ADMIN';
+  }
 }

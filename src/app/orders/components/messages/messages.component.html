@@ -11,7 +11,7 @@
     <p class="time">{{ message.created_at | date: "mediumTime" }}</p>
   </div>
 
-  <div class="send_message_container">
+  <div class="send_message_container" *ngIf="!delivered">
     <ion-item>
       <ion-label position="floating">Envia tu mensaje</ion-label>
       <ion-input [formControl]="messageFiled"></ion-input>

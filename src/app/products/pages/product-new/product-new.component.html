@@ -7,4 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <div *ngIf="units.length > 0">
+    <app-product-form [units]="units"></app-product-form>
+  </div>
+</ion-content>

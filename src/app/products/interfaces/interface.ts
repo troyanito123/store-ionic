@@ -1,3 +1,5 @@
+import { Unit } from 'src/app/units/interfaces/interfaces';
+
 export interface Product {
   id: number;
   name: string;
@@ -14,11 +16,4 @@ export interface Product {
 export interface Image {
   id: number;
   url: string;
-}
-
-export interface Unit {
-  id: number;
-  code: string;
-  name: string;
-  description: string;
 }

@@ -7,4 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <div *ngIf="isLoadedData">
+    <app-product-form [product]="product" [units]="units"></app-product-form>
+  </div>
+</ion-content>

@@ -1,33 +1,48 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CameraPhoto } from '@capacitor/core';
+import { Subscription } from 'rxjs';
 import { Unit } from 'src/app/units/interfaces/interfaces';
 import { UnitService } from 'src/app/units/service/unit.service';
-import { Product } from '../../interfaces/interface';
+import { NewImage, Product } from '../../interfaces/interface';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss'],
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnDestroy {
   @Input() product: Product;
   @Input() units: Unit[];
 
+  newImages: NewImage[] = [];
+  imagesSubs: Subscription;
+
   productForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private photoService: PhotoService) {}
 
   ngOnInit() {
+    this.imagesSubs = this.photoService.images$.subscribe(
+      (images) => (this.newImages = images)
+    );
     this.createForm();
+  }
+
+  ngOnDestroy() {
+    this.imagesSubs?.unsubscribe();
   }
 
   saveProduct() {
     if (this.product) {
       console.log('actualizando producto');
       console.log(this.productForm.value);
+      console.log(this.newImages.map((i) => i.id));
     } else {
       console.log('creando producto');
       console.log(this.productForm.value);
+      console.log(this.newImages.map((i) => i.id));
     }
   }
 
@@ -46,7 +61,7 @@ export class ProductFormComponent implements OnInit {
         [Validators.required, Validators.minLength(2)],
       ],
       price: [
-        this.product ? this.product.price : 1.0,
+        this.product ? Number(this.product.price) : 1.0,
         [Validators.required, Validators.min(1), Validators.max(9999)],
       ],
       unit: [this.unitDefaultField(this.product), [Validators.required]],

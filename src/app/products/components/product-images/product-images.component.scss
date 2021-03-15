@@ -1,0 +1,24 @@
+.product_image {
+  max-width: 9rem;
+  padding: 0.5rem;
+}
+
+.image_container {
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+  max-width: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.product_images_container {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 1px 4px 8px 0px rgba(0, 0, 0, 0.3);
+  display: flex;
+  max-width: 100%;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}

@@ -1,3 +1,4 @@
+import { CameraPhoto } from '@capacitor/core';
 import { Unit } from 'src/app/units/interfaces/interfaces';
 
 export interface Product {
@@ -16,4 +17,9 @@ export interface Product {
 export interface Image {
   id: number;
   url: string;
+}
+
+export interface NewImage {
+  id: string;
+  image: CameraPhoto;
 }

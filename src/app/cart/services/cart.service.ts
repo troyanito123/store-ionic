@@ -38,6 +38,7 @@ export class CartService {
     this._cantInCart = Number(localStorage.getItem('cant') || 0);
     this._costCart = Number(localStorage.getItem('cost') || 0);
     this._location = localStorage.getItem('location') || null;
+    console.log(this._cart);
   }
 
   addToCart(product: Product) {

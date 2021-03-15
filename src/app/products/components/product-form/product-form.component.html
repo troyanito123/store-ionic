@@ -1,52 +1,54 @@
-<form [formGroup]="productForm" autocomplete="off" (ngSubmit)="saveProduct()">
-  <ion-item>
-    <ion-label color="primary" position="floating">Nombre</ion-label>
-    <ion-input
-      type="text"
-      formControlName="name"
-      placeholder="Nombre"
-    ></ion-input>
-  </ion-item>
+<div class="form">
+  <form [formGroup]="productForm" autocomplete="off" (ngSubmit)="saveProduct()">
+    <ion-item>
+      <ion-label color="primary" position="floating">Nombre</ion-label>
+      <ion-input
+        type="text"
+        formControlName="name"
+        placeholder="Nombre"
+      ></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label color="primary" position="floating">Codigo</ion-label>
-    <ion-input
-      type="text"
-      formControlName="code"
-      placeholder="Codigo"
-    ></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label color="primary" position="floating">Codigo</ion-label>
+      <ion-input
+        type="text"
+        formControlName="code"
+        placeholder="Codigo"
+      ></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label color="primary" position="floating">Descripcion</ion-label>
-    <ion-input
-      type="text"
-      formControlName="description"
-      placeholder="Descripcion"
-    ></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label color="primary" position="floating">Descripcion</ion-label>
+      <ion-input
+        type="text"
+        formControlName="description"
+        placeholder="Descripcion"
+      ></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label color="primary" position="floating">Precio</ion-label>
-    <ion-input
-      type="number"
-      formControlName="price"
-      min="0"
-      max="9999"
-      placeholder="Precio"
-    ></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label color="primary" position="floating">Precio</ion-label>
+      <ion-input
+        type="number"
+        formControlName="price"
+        min="0"
+        max="9999"
+        placeholder="Precio"
+      ></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label>Unidad</ion-label>
-    <ion-select formControlName="unit">
-      <ion-select-option [value]="unit" *ngFor="let unit of units">{{
-        unit.name
-      }}</ion-select-option>
-    </ion-select>
-  </ion-item>
+    <ion-item>
+      <ion-label>Unidad</ion-label>
+      <ion-select formControlName="unit">
+        <ion-select-option [value]="unit" *ngFor="let unit of units">{{
+          unit.name
+        }}</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-button type="submit" expand="block" fill="solid" shape="round">
-    Guardar
-  </ion-button>
-</form>
+    <ion-button type="submit" expand="block" fill="solid" shape="round">
+      Guardar
+    </ion-button>
+  </form>
+</div>

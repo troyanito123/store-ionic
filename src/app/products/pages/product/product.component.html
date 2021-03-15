@@ -9,6 +9,10 @@
 
 <ion-content>
   <div *ngIf="isLoadedData">
+    <app-product-images [images]="product.images"></app-product-images>
+
+    <app-product-new-images></app-product-new-images>
+
     <app-product-form [product]="product" [units]="units"></app-product-form>
   </div>
 </ion-content>

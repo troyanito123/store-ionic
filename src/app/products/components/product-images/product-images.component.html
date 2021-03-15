@@ -1,0 +1,13 @@
+<div class="product_images_container shadow">
+  <div *ngFor="let image of images" class="image_container">
+    <ion-img [src]="image.url" class="product_image"></ion-img>
+    <div>
+      <ion-chip color="tertiary" shape="round">
+        <ion-label>Actualizar</ion-label>
+      </ion-chip>
+      <ion-chip color="danger" fill="solid">
+        <ion-label>Eliminar</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { CartService } from 'src/app/cart/services/cart.service';
 import { environment } from '../../../environments/environment';
 import { AuthReponse, User } from '../interfaces/interface';
 
@@ -22,7 +23,7 @@ export class AuthService {
     return this._accessToken;
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cartService: CartService) {
     this._user = JSON.parse(localStorage.getItem('user')) || null;
     this._accessToken = localStorage.getItem('access_token') || null;
   }
@@ -59,9 +60,13 @@ export class AuthService {
     this._accessToken = null;
     localStorage.removeItem('user');
     localStorage.removeItem('access_token');
+    this.cartService.deleteCart();
   }
 
   isAdmin() {
+    if (!this._user) {
+      return false;
+    }
     return this._user.role === 'ADMIN';
   }
 }

@@ -5,6 +5,7 @@ import { AuthService } from '../auth/services/auth.service';
 import { CartService } from '../cart/services/cart.service';
 import { ProductService } from '../products/services/product.service';
 import { Product } from '../products/interfaces/interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,8 @@ export class HomePage implements OnInit, OnDestroy {
     private productService: ProductService,
     private loadingController: LoadingController,
     private cartService: CartService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   async ngOnInit() {
@@ -50,6 +52,11 @@ export class HomePage implements OnInit, OnDestroy {
       message: 'Cargando productos ...',
       backdropDismiss: false,
     });
+  }
+
+  logout() {
+    this.authService.deleteUser();
+    this.router.navigate(['auth']);
   }
 
   get isAdmin() {

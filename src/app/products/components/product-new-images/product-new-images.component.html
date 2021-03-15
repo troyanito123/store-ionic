@@ -1,0 +1,20 @@
+<div class="new_images_container" *ngIf="newImages.length > 0">
+  <div *ngFor="let newImage of newImages" class="new_image_container">
+    <img [src]="newImage.image.webPath | safeUrl" class="new_image" />
+    <ion-button color="danger" (click)="removeOneImage(newImage.id)">
+      <ion-icon slot="icon-only" name="remove"></ion-icon>
+    </ion-button>
+  </div>
+</div>
+
+<div class="actions_container">
+  <ion-button (click)="takePicture()" fill="solid" shape="round">
+    <ion-icon slot="start" name="camera"></ion-icon>
+    <ion-label>Nueva Imagen</ion-label>
+  </ion-button>
+
+  <ion-button (click)="toGallery()" fill="solid" shape="round">
+    <ion-icon slot="start" name="image-outline"></ion-icon>
+    <ion-label>galeria</ion-label>
+  </ion-button>
+</div>

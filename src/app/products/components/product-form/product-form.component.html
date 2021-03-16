@@ -7,6 +7,9 @@
         formControlName="name"
         placeholder="Nombre"
       ></ion-input>
+      <span class="error_message" *ngIf="invalidField('name')">{{
+        invalidNameMsg
+      }}</span>
     </ion-item>
 
     <ion-item>
@@ -16,6 +19,9 @@
         formControlName="code"
         placeholder="Codigo"
       ></ion-input>
+      <span class="error_message" *ngIf="invalidField('code')">{{
+        invalidCodeMsg
+      }}</span>
     </ion-item>
 
     <ion-item>
@@ -25,6 +31,9 @@
         formControlName="description"
         placeholder="Descripcion"
       ></ion-input>
+      <span class="error_message" *ngIf="invalidField('description')">{{
+        invalidDescriptionMsg
+      }}</span>
     </ion-item>
 
     <ion-item>
@@ -36,6 +45,9 @@
         max="9999"
         placeholder="Precio"
       ></ion-input>
+      <ion-label class="error_message" *ngIf="invalidField('price')">{{
+        invalidPriceMsg
+      }}</ion-label>
     </ion-item>
 
     <ion-item>
@@ -45,6 +57,9 @@
           unit.name
         }}</ion-select-option>
       </ion-select>
+      <ion-label class="error_message" *ngIf="invalidField('unit')">{{
+        invalidUnitMsg
+      }}</ion-label>
     </ion-item>
 
     <ion-button type="submit" expand="block" fill="solid" shape="round">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmailValidatorService } from 'src/app/shared/services/email-validator.service';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 import { ValidatorService } from 'src/app/shared/services/validator.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -17,10 +18,11 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private emailValidatorService: EmailValidatorService,
     private validatorService: ValidatorService,
     private authService: AuthService,
-    private router: Router
+    private utilsService: UtilsService
   ) {
     this.emailPattern = this.validatorService.emailPattern;
     this.createForm();
@@ -35,28 +37,35 @@ export class RegisterComponent implements OnInit {
     }
     const { name, email, password } = this.registerForm.value;
     this.isLoading = true;
-    this.authService.register(name, email, password).subscribe((success) => {
-      this.isLoading = false;
-      if (success) {
-        this.router.navigate(['home']);
-      } else {
-        // TODO: create mensaje de error en el registro
-        console.log('no se creo el usuario');
-      }
-    });
+    this.authService
+      .register(name, email, password)
+      .subscribe(async (success) => {
+        this.isLoading = false;
+        if (success) {
+          this.router.navigate(['home']);
+        } else {
+          const alert = await this.utilsService.createAlert(
+            'Ocurrio un error!',
+            'Vuelve a intentar por favor!'
+          );
+          this.registerForm.get('password').setValue('');
+          this.registerForm.get('password2').setValue('');
+          alert.present();
+        }
+      });
   }
 
   private createForm() {
     this.registerForm = this.fb.group(
       {
-        name: ['test01', [Validators.required, Validators.minLength(2)]],
+        name: ['', [Validators.required, Validators.minLength(2)]],
         email: [
-          'test01@test.com',
+          '',
           [Validators.required, Validators.pattern(this.emailPattern)],
           [this.emailValidatorService],
         ],
-        password: ['123123', [Validators.required, Validators.minLength(6)]],
-        password2: ['123123', [Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        password2: ['', [Validators.required]],
       },
       {
         validators: [this.validatorService.sameFields('password', 'password2')],

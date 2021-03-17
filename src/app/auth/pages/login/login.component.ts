@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 import { ValidatorService } from 'src/app/shared/services/validator.service';
 import { AuthService } from '../../services/auth.service';
 
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private validatorService: ValidatorService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private utilsService: UtilsService
   ) {
     this.emailPattern = validatorService.emailPattern;
     this.createForm();
@@ -33,13 +35,17 @@ export class LoginComponent implements OnInit {
     }
     const { email, password } = this.loginForm.value;
     this.isLoading = true;
-    this.authService.login(email, password).subscribe((success) => {
+    this.authService.login(email, password).subscribe(async (success) => {
       this.isLoading = false;
       if (success) {
         this.router.navigate(['home']);
       } else {
-        //TODO: Show error login
-        console.log('credenciales incorrectas');
+        const alert = await this.utilsService.createAlert(
+          'Error de acceso',
+          'Comprueba tus credenciales por favor'
+        );
+        this.loginForm.get('password').setValue('');
+        alert.present();
       }
     });
   }

@@ -26,7 +26,9 @@ export class HomeGuard implements CanActivate, CanLoad {
       tap((res) => this.authService.saveUser(res)),
       map(() => true),
       catchError(() => {
-        this.authService.deleteUser();
+        if (this.authService.isAuthenticate) {
+          this.authService.deleteUser();
+        }
         this.router.navigate(['/auth']).then(async () => {
           const toast = await this.toastController.create({
             message: 'Por favor ingrese sus credenciales para continuar.',
@@ -44,7 +46,9 @@ export class HomeGuard implements CanActivate, CanLoad {
       tap((res) => this.authService.saveUser(res)),
       map(() => true),
       catchError(() => {
-        this.authService.deleteUser();
+        if (this.authService.isAuthenticate) {
+          this.authService.deleteUser();
+        }
         this.router.navigate(['/auth']).then(async () => {
           const toast = await this.toastController.create({
             message: 'Por favor ingrese sus credenciales para continuar.',

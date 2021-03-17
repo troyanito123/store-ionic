@@ -69,4 +69,8 @@ export class AuthService {
     }
     return this._user.role === 'ADMIN';
   }
+
+  get isAuthenticate() {
+    return this._user !== null;
+  }
 }

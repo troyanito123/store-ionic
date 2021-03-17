@@ -62,4 +62,8 @@ export class HomePage implements OnInit, OnDestroy {
   get isAdmin() {
     return this.authService.isAdmin();
   }
+
+  get isAuthenticate() {
+    return this.authService.isAuthenticate;
+  }
 }

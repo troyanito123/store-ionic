@@ -4,7 +4,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { HomeGuard } from './guards/home.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'auth', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'home',
     loadChildren: () =>

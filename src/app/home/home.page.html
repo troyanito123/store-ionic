@@ -1,8 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="logout()">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
+      <ion-button
+        *ngIf="isAuthenticate"
+        (click)="logout()"
+        color="warning"
+        fill="solid"
+        shape="round"
+      >
+        <ion-icon slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+      <ion-button
+        *ngIf="!isAuthenticate"
+        routerLink="/auth"
+        color="tertiary"
+        fill="solid"
+        shape="round"
+      >
+        <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title> Tiendita </ion-title>
@@ -10,7 +25,6 @@
       <ion-button routerLink="/orders">
         <ion-icon slot="start" name="list-circle-outline"></ion-icon>
         Pedidos
-        <ion-badge color="primary">5</ion-badge>
       </ion-button>
       <ion-button routerLink="/cart">
         <ion-icon slot="start" name="cart-outline"></ion-icon>

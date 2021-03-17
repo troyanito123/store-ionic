@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe(async (success) => {
       this.isLoading = false;
       if (success) {
+        this.loginForm.reset();
         this.router.navigate(['home']);
       } else {
         const alert = await this.utilsService.createAlert(

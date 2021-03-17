@@ -15,6 +15,8 @@ export class ProductService {
 
   product$: EventEmitter<Product> = new EventEmitter();
 
+  removeImage$: EventEmitter<number> = new EventEmitter();
+
   constructor(private http: HttpClient) {}
 
   get product() {
@@ -86,6 +88,14 @@ export class ProductService {
     return this.http.put<Product>(`${this._url}/${id}`, formData).pipe(
       switchMap((product) => this.getOneProduct(product.id)),
       catchError(() => of(null))
+    );
+  }
+
+  removeImage(id: number) {
+    return this.http.delete(`${environment.url}/images/${id}`).pipe(
+      tap(() => this.removeImage$.emit(id)),
+      map(() => true),
+      catchError(() => of(false))
     );
   }
 

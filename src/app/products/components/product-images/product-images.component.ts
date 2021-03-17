@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 import { Image } from '../../interfaces/interface';
 import { ProductService } from '../../services/product.service';
 
@@ -12,6 +13,7 @@ export class ProductImagesComponent implements OnInit, OnDestroy {
   @Input() images: Image[];
 
   productSubs: Subscription;
+  removeImageSubs: Subscription;
 
   constructor(private productService: ProductService) {}
 
@@ -26,6 +28,7 @@ export class ProductImagesComponent implements OnInit, OnDestroy {
   }
 
   removeImage(id: number) {
-    console.log(id);
+    this.images = this.images.filter((i) => i.id !== id);
+    this.productService.removeImage(id).subscribe();
   }
 }

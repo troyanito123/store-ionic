@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list>
     <!-- <ion-item *ngFor="let order of orders" routerLink="/orders/{{ order.id }}"> -->
-    <ion-item *ngFor="let order of orders" (click)="goToOrder(order.id)">
+    <ion-item *ngFor="let order of orders" (click)="goToOrder(order.id)" detail>
       <ion-icon slot="start" name="cart-outline"></ion-icon>
       <ion-label>
         <h2>{{ order.address }}</h2>

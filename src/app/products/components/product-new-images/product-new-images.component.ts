@@ -16,6 +16,7 @@ export class ProductNewImagesComponent implements OnInit, OnDestroy {
   constructor(private photoService: PhotoService) {}
 
   ngOnInit() {
+    this.newImages = this.photoService.images;
     this.imagesSubs = this.photoService.images$.subscribe((images) => {
       this.newImages = images;
     });

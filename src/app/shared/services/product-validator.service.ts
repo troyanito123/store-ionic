@@ -1,19 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  AsyncValidator,
+  ValidationErrors,
+} from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { ProductService } from 'src/app/products/services/product.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductValidatorService {
+export class ProductValidatorService implements AsyncValidator {
   private _url = `${environment.url}/validation/product`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private productService: ProductService
+  ) {}
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
     const code: string = control.value;
+    const product = this.productService.product;
+    if (product.code) {
+      if (product.code === code.toLocaleUpperCase()) {
+        return of(null);
+      }
+    }
     return this.http
       .post<boolean>(this._url, { code: code.toLocaleUpperCase() })
       .pipe(

@@ -12,12 +12,18 @@ import { NewImage } from '../interfaces/interface';
 })
 export class PhotoService {
   private _images: NewImage[] = [];
-
   images$: EventEmitter<NewImage[]> = new EventEmitter();
+
+  private _productImages: NewImage[] = [];
+  productImages$: EventEmitter<NewImage[]> = new EventEmitter();
 
   setImage(newImage: NewImage) {
     this._images.push(newImage);
     this.emitChanges();
+  }
+
+  get images() {
+    return [...this._images];
   }
 
   deleteImage(id: string) {
@@ -32,18 +38,28 @@ export class PhotoService {
 
   constructor() {}
 
-  async takePicture() {
+  async takePicture(isNew = true, id?: string) {
     const image = await this.processImage(CameraSource.Camera);
-    const id = Date.now().toPrecision();
-    this._images.push({ id, image });
-    this.emitChanges();
+    if (isNew) {
+      const id = Date.now().toPrecision();
+      this._images.push({ id, image });
+      this.emitChanges();
+    } else {
+      this._productImages.push({ id, image });
+      this.productImages$.emit(this._productImages);
+    }
   }
 
-  async chooseGallery() {
+  async chooseGallery(isNew = true, id?: string) {
     const image = await this.processImage(CameraSource.Photos);
-    const id = Date.now().toPrecision();
-    this._images.push({ id, image });
-    this.emitChanges();
+    if (isNew) {
+      const id = Date.now().toPrecision();
+      this._images.push({ id, image });
+      this.emitChanges();
+    } else {
+      this._productImages.push({ id, image });
+      this.productImages$.emit(this._productImages);
+    }
   }
 
   private async processImage(source: CameraSource) {

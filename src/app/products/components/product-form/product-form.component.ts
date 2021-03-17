@@ -56,18 +56,14 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const images = [];
-    for (const image of this.newImages) {
-      const blob = await fetch(image.image.webPath).then((r) => r.blob());
-      images.push(blob);
-    }
+    const images = await this.createBlobImages();
 
     const loading = await this.utilsService.createLoading(
       'Creando producto...'
     );
     loading.present();
     if (this.product) {
-      console.log('actualizando producto');
+      this.updatedProduct(loading, images);
     } else {
       this.createProduct(loading, images);
     }
@@ -161,7 +157,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   private createProduct(loading: HTMLIonLoadingElement, images: any[]) {
-    console.log('creando producto');
     const { name, code, description, price, unit } = this.productForm.value;
     this.productService
       .createProduct(name, code, description, price, unit.id, images)
@@ -184,5 +179,46 @@ export class ProductFormComponent implements OnInit, OnDestroy {
           alert.present();
         }
       });
+  }
+
+  private updatedProduct(loading: HTMLIonLoadingElement, images: any[]) {
+    const { name, code, description, price, unit } = this.productForm.value;
+    this.productService
+      .updatedProduct(
+        this.product.id,
+        name,
+        code,
+        description,
+        price,
+        unit.id,
+        images
+      )
+      .subscribe(async (res) => {
+        if (res) {
+          this.product = res;
+          this.photoService.deleteAllImages();
+          loading.dismiss();
+          const toast = await this.utilsService.createToast(
+            'Producto actualizado correctamente'
+          );
+          toast.present();
+        } else {
+          loading.dismiss();
+          const alert = await this.utilsService.createAlert(
+            'Error',
+            'Ocurrio un error al actualizar el producto, intente denuevo por favor'
+          );
+          alert.present();
+        }
+      });
+  }
+
+  private async createBlobImages() {
+    const images = [];
+    for (const image of this.newImages) {
+      const blob = await fetch(image.image.webPath).then((r) => r.blob());
+      images.push(blob);
+    }
+    return images;
   }
 }

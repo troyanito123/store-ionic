@@ -30,7 +30,6 @@ export class OrderComponent implements OnInit {
       .subscribe((order) => {
         loading.dismiss();
         this.order = order;
-        console.log(this.order);
       });
   }
 
@@ -41,7 +40,6 @@ export class OrderComponent implements OnInit {
       .changeDelivered(this.order.id, delivered)
       .subscribe((order) => {
         this.isLoading = false;
-        console.log(order);
         if (order) {
           this.order.delivered = order.delivered;
         }

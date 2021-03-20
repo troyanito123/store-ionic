@@ -20,7 +20,6 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.createdMap();
-    console.log(this.lockLocation);
   }
 
   createdMap() {

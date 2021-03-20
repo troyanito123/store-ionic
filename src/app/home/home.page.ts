@@ -59,6 +59,15 @@ export class HomePage implements OnInit, OnDestroy {
     this.router.navigate(['auth']);
   }
 
+  doRefresh(event: any) {
+    this.productsSubs = this.productService
+      .getProducts()
+      .subscribe(async (products) => {
+        this.products = products;
+        event.target.complete();
+      });
+  }
+
   get isAdmin() {
     return this.authService.isAdmin();
   }

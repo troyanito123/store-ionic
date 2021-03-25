@@ -8,7 +8,7 @@ import { SocketService } from '../shared/services/socket.service';
   styleUrls: ['./orders.page.scss'],
 })
 export class OrdersPage implements OnInit {
-  constructor(private socket: Socket) {}
+  constructor() {}
 
   ngOnInit() {}
 }

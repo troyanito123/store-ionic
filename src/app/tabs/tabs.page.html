@@ -1,0 +1,24 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home">
+      <ion-icon name="home"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="cart">
+      <ion-icon name="cart"></ion-icon>
+      <ion-label>Carrito</ion-label>
+      <ion-badge *ngIf="cantInCart > 0">{{cantInCart}}</ion-badge>
+    </ion-tab-button>
+
+    <ion-tab-button tab="orders">
+      <ion-icon name="list"></ion-icon>
+      <ion-label>Pedidos</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="products">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Admin</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

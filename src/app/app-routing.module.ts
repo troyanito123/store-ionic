@@ -4,7 +4,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { HomeGuard } from './guards/home.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'tabs', pathMatch: 'full' },
   {
     path: 'home',
     loadChildren: () =>
@@ -33,6 +33,11 @@ const routes: Routes = [
       import('./products/products.module').then((m) => m.ProductsPageModule),
     canActivate: [AdminGuard],
     canLoad: [AdminGuard],
+  },
+  {
+    path: 'tabs',
+    loadChildren: () =>
+      import('./tabs/tabs.module').then((m) => m.TabsPageModule),
   },
 ];
 

@@ -4,12 +4,15 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
+import { SocketIoModule } from 'ngx-socket-io';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddHeadersService } from './shared/services/add-headers.service';
 import { DomSanitizerPipe } from './pipes/dom-sanitizer.pipe';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +22,7 @@ import { DomSanitizerPipe } from './pipes/dom-sanitizer.pipe';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    SocketIoModule.forRoot(environment.socketIoConfig),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

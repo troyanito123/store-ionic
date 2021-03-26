@@ -28,7 +28,7 @@ export class OrderListComponent implements OnInit {
   }
 
   goToOrder(id: number) {
-    this.router.navigate(['/orders', id]);
+    this.router.navigate(['tabs/orders', id]);
   }
 
   createLoading() {

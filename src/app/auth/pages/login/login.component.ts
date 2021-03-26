@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       this.isLoading = false;
       if (success) {
         this.loginForm.reset();
-        this.router.navigate(['home']);
+        this.router.navigate(['tabs']);
       } else {
         const alert = await this.utilsService.createAlert(
           'Error de acceso',

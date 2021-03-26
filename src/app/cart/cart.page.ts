@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Product } from '../products/interfaces/interface';
 import { CartService } from './services/cart.service';

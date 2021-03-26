@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
         this.isLoading = false;
         if (success) {
           this.registerForm.reset();
-          this.router.navigate(['home']);
+          this.router.navigate(['tabs']);
         } else {
           const alert = await this.utilsService.createAlert(
             'Ocurrio un error!',

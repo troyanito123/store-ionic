@@ -69,7 +69,7 @@ export class OrderSendComponent implements OnInit {
         if (success) {
           this.cartService.deleteCart();
           this.addressField.reset();
-          this.router.navigate(['/home']).then(async () => {
+          this.router.navigate(['/tabs/orders']).then(async () => {
             const toast = await this.createToast(
               'Tu pedido esta siendo procesado!'
             );

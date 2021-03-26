@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons slot="end">
       <ion-button
         *ngIf="isAuthenticate"
         (click)="logout()"
@@ -21,16 +21,6 @@
       </ion-button>
     </ion-buttons>
     <ion-title> Tiendita </ion-title>
-    <ion-buttons slot="end">
-      <ion-button routerLink="/orders">
-        <ion-icon slot="start" name="list-circle-outline"></ion-icon>
-        Pedidos
-      </ion-button>
-      <ion-button routerLink="/cart">
-        <ion-icon slot="start" name="cart-outline"></ion-icon>
-        <ion-badge color="primary">{{cantInCart}}</ion-badge>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

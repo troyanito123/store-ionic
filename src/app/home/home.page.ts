@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+
 import { AuthService } from '../auth/services/auth.service';
-import { CartService } from '../cart/services/cart.service';
 import { ProductService } from '../products/services/product.service';
 import { Product } from '../products/interfaces/interface';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,15 +14,12 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit, OnDestroy {
   products: Product[] = [];
-  cantInCart = 0;
 
-  cantSubs: Subscription;
   productsSubs: Subscription;
 
   constructor(
     private productService: ProductService,
     private loadingController: LoadingController,
-    private cartService: CartService,
     private authService: AuthService,
     private router: Router
   ) {}
@@ -30,10 +27,6 @@ export class HomePage implements OnInit, OnDestroy {
   async ngOnInit() {
     const loading = await this.createLoading();
     await loading.present();
-    this.cantInCart = this.cartService.cantInCart;
-    this.cantSubs = this.cartService.cantInCart$.subscribe((cant) => {
-      this.cantInCart = cant;
-    });
     this.productsSubs = this.productService
       .getProducts()
       .subscribe(async (products) => {
@@ -43,7 +36,6 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.cantSubs?.unsubscribe();
     this.productsSubs?.unsubscribe();
   }
 

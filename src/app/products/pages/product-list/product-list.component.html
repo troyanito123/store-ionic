@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button defaultHref="/tabs/settings"></ion-back-button>
     </ion-buttons>
     <ion-title>Lista de productos</ion-title>
   </ion-toolbar>
@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list>
     <ion-item
-      routerLink="/products/product/{{ product.id }}"
+      routerLink="/tabs/settings/products/product/{{ product.id }}"
       detail
       *ngFor="let product of products"
     >
@@ -26,7 +26,7 @@
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="/products/new">
+    <ion-fab-button routerLink="/tabs/settings/products/new">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

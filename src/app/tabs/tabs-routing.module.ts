@@ -31,6 +31,13 @@ const routes: Routes = [
             (m) => m.ProductsPageModule
           ),
       },
+      {
+        path: 'settings',
+        loadChildren: () =>
+          import('../settings/settings.module').then(
+            (m) => m.SettingsPageModule
+          ),
+      },
       { path: '', redirectTo: 'home' },
     ],
   },

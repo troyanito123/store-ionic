@@ -5,8 +5,11 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
-    <!-- <ion-item *ngFor="let order of orders" routerLink="/orders/{{ order.id }}"> -->
     <ion-item *ngFor="let order of orders" (click)="goToOrder(order.id)" detail>
       <ion-icon slot="start" name="cart-outline"></ion-icon>
       <ion-label>

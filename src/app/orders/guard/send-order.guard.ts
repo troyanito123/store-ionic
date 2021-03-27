@@ -15,7 +15,7 @@ export class SendOrderGuard implements CanActivate {
 
   canActivate(): boolean {
     if (this.cartService.cantInCart < 1) {
-      this.router.navigate(['/cart']).then(async () => {
+      this.router.navigate(['/tabs/cart']).then(async () => {
         const toast = await this.toastController.create({
           duration: 2500,
           message: 'Tiene que tener algo en su carrito!',

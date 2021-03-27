@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AdminGuard } from '../guards/admin.guard';
+import { HomeGuard } from '../guards/home.guard';
 
 import { TabsPage } from './tabs.page';
 
@@ -22,14 +24,8 @@ const routes: Routes = [
         path: 'orders',
         loadChildren: () =>
           import('../orders/orders.module').then((m) => m.OrdersPageModule),
-      },
-
-      {
-        path: 'products',
-        loadChildren: () =>
-          import('../settings/pages/products/products.module').then(
-            (m) => m.ProductsPageModule
-          ),
+        canActivate: [HomeGuard],
+        canLoad: [HomeGuard],
       },
       {
         path: 'settings',
@@ -37,6 +33,8 @@ const routes: Routes = [
           import('../settings/settings.module').then(
             (m) => m.SettingsPageModule
           ),
+        canActivate: [AdminGuard],
+        canLoad: [AdminGuard],
       },
       { path: '', redirectTo: 'home' },
     ],

@@ -26,7 +26,7 @@ export class AdminGuard implements CanActivate, CanLoad {
       tap((res) => this.authService.saveUser(res)),
       map((res) => {
         if (res.data.role !== 'ADMIN') {
-          this.router.navigate(['/home']).then(async () => {
+          this.router.navigate(['/tabs/home']).then(async () => {
             const toast = await this.toastController.create({
               message: 'No tienes los privilegios para ingresar a esa ruta!',
               duration: 2500,
@@ -57,7 +57,7 @@ export class AdminGuard implements CanActivate, CanLoad {
       tap((res) => this.authService.saveUser(res)),
       map((res) => {
         if (res.data.role !== 'ADMIN') {
-          this.router.navigate(['/home']).then(async () => {
+          this.router.navigate(['/tabs/home']).then(async () => {
             const toast = await this.toastController.create({
               message: 'No tienes los privilegios para ingresar a esa ruta!',
               duration: 2500,

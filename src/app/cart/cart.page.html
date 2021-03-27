@@ -2,12 +2,6 @@
   <ion-toolbar>
     <ion-title>Carrito</ion-title>
     <ion-buttons slot="end" color="primary">
-      <div class="cost_conatainer">
-        <p>Costo Total:</p>
-        <ion-badge slot="start" color="primary"
-          >{{cost | localMoney}}</ion-badge
-        >
-      </div>
       <ion-button
         routerLink="/tabs/orders/send"
         color="tertiary"
@@ -21,6 +15,10 @@
 </ion-header>
 
 <ion-content>
+  <div class="cost_conatainer">
+    <p>Costo Total:</p>
+    <ion-badge color="tertiary" mode="md">{{cost | localMoney}}</ion-badge>
+  </div>
   <app-product-cart
     [product]="product"
     *ngFor="let product of products"

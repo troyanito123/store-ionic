@@ -1,5 +1,5 @@
 import { User } from 'src/app/auth/interfaces/interface';
-import { Product } from 'src/app/products/interfaces/interface';
+import { Product } from '../../settings/pages/products/interfaces/interface';
 
 export interface Order {
   id: number;

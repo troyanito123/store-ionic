@@ -7,7 +7,7 @@ import {
   ToastController,
 } from '@ionic/angular';
 import { CartService } from 'src/app/cart/services/cart.service';
-import { Product } from '../../../products/interfaces/interface';
+import { Product } from '../../../settings/pages/products/interfaces/interface';
 import { OrderService } from '../../services/order.service';
 
 @Component({

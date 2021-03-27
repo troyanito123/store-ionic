@@ -8,7 +8,7 @@ import {
 import { environment } from '../../../environments/environment';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { ProductService } from 'src/app/products/services/product.service';
+import { ProductService } from '../../settings/pages/products/services/product.service';
 
 @Injectable({
   providedIn: 'root',

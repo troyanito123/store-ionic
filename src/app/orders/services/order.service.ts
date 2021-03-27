@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from 'src/app/auth/interfaces/interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { Product } from 'src/app/products/interfaces/interface';
+import { Product } from '../../settings/pages/products/interfaces/interface';
 import { Order, OrderFull } from 'src/app/orders/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 

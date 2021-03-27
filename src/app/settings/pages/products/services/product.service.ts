@@ -3,7 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { NewImage, Product } from '../interfaces/interface';
+import { Product } from '../interfaces/interface';
 
 @Injectable({
   providedIn: 'root',

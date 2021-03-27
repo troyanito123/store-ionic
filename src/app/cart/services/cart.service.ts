@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
-import { Product } from 'src/app/products/interfaces/interface';
+import { Product } from '../../settings/pages/products/interfaces/interface';
 
 @Injectable({
   providedIn: 'root',

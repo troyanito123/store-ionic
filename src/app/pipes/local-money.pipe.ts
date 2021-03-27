@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Product } from '../products/interfaces/interface';
 
 @Pipe({
   name: 'localMoney',

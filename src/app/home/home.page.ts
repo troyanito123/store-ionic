@@ -4,8 +4,8 @@ import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/services/auth.service';
-import { ProductService } from '../products/services/product.service';
-import { Product } from '../products/interfaces/interface';
+import { ProductService } from '../settings/pages/products/services/product.service';
+import { Product } from '../settings/pages/products/interfaces/interface';
 
 @Component({
   selector: 'app-home',

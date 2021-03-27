@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -12,7 +12,7 @@ import { ProductComponent } from './pages/product/product.component';
 import { ProductNewComponent } from './pages/product-new/product-new.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { ProductImagesComponent } from './components/product-images/product-images.component';
-import { PipesModule } from '../pipes/pipes.module';
+import { PipesModule } from '../../../pipes/pipes.module';
 import { ProductNewImagesComponent } from './components/product-new-images/product-new-images.component';
 
 @NgModule({

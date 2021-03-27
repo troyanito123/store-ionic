@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { Product } from '../../interfaces/interface';
 import { ProductService } from '../../services/product.service';
 
@@ -8,8 +9,9 @@ import { ProductService } from '../../services/product.service';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss'],
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+  productSubs: Subscription;
 
   constructor(
     private productService: ProductService,
@@ -19,10 +21,16 @@ export class ProductListComponent implements OnInit {
   async ngOnInit() {
     const loading = await this.createLoading();
     loading.present();
-    this.productService.getProductForAdmin().subscribe((products) => {
-      loading.dismiss();
-      this.products = products;
-    });
+    this.productSubs = this.productService
+      .getProductForAdmin()
+      .subscribe((products) => {
+        loading.dismiss();
+        this.products = products;
+      });
+  }
+
+  ngOnDestroy() {
+    this.productSubs?.unsubscribe();
   }
 
   createLoading() {
@@ -30,5 +38,14 @@ export class ProductListComponent implements OnInit {
       message: 'Cargando datos, espere por favor!',
       backdropDismiss: false,
     });
+  }
+
+  doRefresh(event: any) {
+    this.productSubs = this.productService
+      .getProductForAdmin()
+      .subscribe((products) => {
+        this.products = products;
+        event.target.complete();
+      });
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Product } from '../settings/pages/products/interfaces/interface';
 import { CartService } from './services/cart.service';
@@ -8,7 +9,7 @@ import { CartService } from './services/cart.service';
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
 })
-export class CartPage implements OnInit, OnDestroy {
+export class CartPage implements OnInit, OnDestroy, ViewWillEnter {
   products: Product[] = [];
   cost = 0;
 
@@ -16,6 +17,10 @@ export class CartPage implements OnInit, OnDestroy {
   deleteProductFromCartSubs: Subscription;
 
   constructor(private cartService: CartService) {}
+
+  ionViewWillEnter(): void {
+    this.products = this.cartService.cart;
+  }
 
   ngOnInit() {
     this.products = this.cartService.cart;

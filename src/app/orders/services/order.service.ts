@@ -17,6 +17,7 @@ export class OrderService {
 
   constructor(private http: HttpClient, private authService: AuthService) {
     this.user = this.authService.user;
+    this.authService.actUser$.subscribe((user) => (this.user = user));
   }
 
   sendOrder(

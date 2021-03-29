@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 import { Order } from '../../interfaces/interfaces';
 import { OrderService } from '../../services/order.service';
 
@@ -10,7 +11,7 @@ import { OrderService } from '../../services/order.service';
   templateUrl: './order-list.component.html',
   styleUrls: ['./order-list.component.scss'],
 })
-export class OrderListComponent implements OnInit, OnDestroy {
+export class OrderListComponent implements OnInit, OnDestroy, ViewWillEnter {
   orders: Order[];
 
   orderSubs: Subscription;
@@ -18,17 +19,18 @@ export class OrderListComponent implements OnInit, OnDestroy {
   constructor(
     private orderService: OrderService,
     private router: Router,
-    private loadingController: LoadingController
+    private utilsService: UtilsService
   ) {}
-
-  async ngOnInit() {
-    const loading = await this.createLoading();
+  async ionViewWillEnter() {
+    const loading = await this.utilsService.createLoading();
     loading.present();
     this.orderSubs = this.orderService.getOrders().subscribe((orders) => {
-      loading.dismiss();
       this.orders = orders;
+      loading.dismiss();
     });
   }
+
+  async ngOnInit() {}
 
   ngOnDestroy() {
     this.orderSubs?.unsubscribe();
@@ -36,13 +38,6 @@ export class OrderListComponent implements OnInit, OnDestroy {
 
   goToOrder(id: number) {
     this.router.navigate(['tabs/orders', id]);
-  }
-
-  createLoading() {
-    return this.loadingController.create({
-      message: 'Cargando data, espere por favor',
-      backdropDismiss: false,
-    });
   }
 
   doRefresh(event: any) {

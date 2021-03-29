@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { CartService } from 'src/app/cart/services/cart.service';
@@ -14,6 +14,9 @@ export class AuthService {
 
   private _user;
   private _accessToken;
+
+  actUser$: EventEmitter<User> = new EventEmitter();
+  actToken$: EventEmitter<string> = new EventEmitter();
 
   get user(): User | null {
     return { ...this._user };
@@ -53,6 +56,8 @@ export class AuthService {
     this._accessToken = `Bearer ${res.access_token}`;
     localStorage.setItem('user', JSON.stringify(this._user));
     localStorage.setItem('access_token', `Bearer ${res.access_token}`);
+    this.actUser$.emit(this._user);
+    this.actToken$.emit(this._accessToken);
   }
 
   deleteUser() {

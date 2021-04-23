@@ -13,7 +13,7 @@ import { ProductService } from '../../settings/pages/products/services/product.s
 @Injectable({
   providedIn: 'root',
 })
-export class ProductValidatorService implements AsyncValidator {
+export class ProductValidatorService   {
   private _url = `${environment.url}/validation/product`;
 
   constructor(

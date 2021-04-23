@@ -5,12 +5,27 @@ import { Socket } from 'ngx-socket-io';
   providedIn: 'root',
 })
 export class SocketService {
-  constructor(private socket: Socket) {}
+  public socketStatus = false;
 
-  getConnection() {
-    this.socket.on('connection', (resp) => {
-      console.log(resp);
+  constructor(private socket: Socket) {
+    this.checkStatus();
+  }
+
+  checkStatus() {
+    this.socket.on('connect', () => {
+      this.socketStatus = true;
     });
-    return this.socket.fromEvent('connection');
+
+    this.socket.on('disconnect', () => {
+      this.socketStatus = false;
+    });
+  }
+
+  emit(evento: string, payload?: any, callback?: Function) {
+    this.socket.emit(evento, payload, callback);
+  }
+
+  listen(evento: string) {
+    return this.socket.fromEvent(evento);
   }
 }

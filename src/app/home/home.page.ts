@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/services/auth.service';
 import { ProductService } from '../settings/pages/products/services/product.service';
 import { Product } from '../settings/pages/products/interfaces/interface';
+import { SocketService } from '../shared/services/socket.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,8 @@ export class HomePage implements OnInit, OnDestroy {
     private productService: ProductService,
     private loadingController: LoadingController,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private socketService: SocketService
   ) {}
 
   async ngOnInit() {
@@ -33,6 +35,9 @@ export class HomePage implements OnInit, OnDestroy {
         await loading.dismiss();
         this.products = products;
       });
+    this.socketService.listen('new-order').subscribe((res) => {
+      console.log(res);
+    });
   }
 
   ngOnDestroy() {

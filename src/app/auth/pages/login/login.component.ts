@@ -38,6 +38,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe(async (success) => {
       this.isLoading = false;
       if (success) {
+        const pushId = localStorage.getItem('pushId');
+        if (pushId) {
+          this.authService.updatedPushId(pushId).subscribe();
+        }
         this.loginForm.reset();
         this.router.navigate(['tabs']);
       } else {

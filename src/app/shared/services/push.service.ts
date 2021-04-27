@@ -5,6 +5,7 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
   providedIn: 'root',
 })
 export class PushService {
+  private pushId;
   constructor(private oneSignal: OneSignal) {}
 
   initialize() {
@@ -23,6 +24,11 @@ export class PushService {
 
     this.oneSignal.handleNotificationOpened().subscribe((notification) => {
       console.log('Abierto', notification);
+    });
+
+    this.oneSignal.getIds().then((info) => {
+      this.pushId = info.userId;
+      console.log('pushId', this.pushId);
     });
 
     this.oneSignal.endInit();

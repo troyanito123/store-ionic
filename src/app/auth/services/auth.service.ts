@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { environment } from '../../../environments/environment';
 import { AuthReponse, User } from '../interfaces/interface';
@@ -32,10 +32,12 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
+    const pushId = localStorage.getItem('pushId');
     return this.http
       .post<AuthReponse>(`${this.url}/login`, { email, password })
       .pipe(
         tap((res) => this.saveUser(res)),
+        switchMap(() => this.updatedPushId(pushId)),
         map(() => true),
         catchError(() => of(false))
       );
@@ -49,6 +51,10 @@ export class AuthService {
         map(() => true),
         catchError(() => of(false))
       );
+  }
+
+  updatedPushId(pushId: string) {
+    return this.http.post(`${environment.url}/user/push`, { pushId });
   }
 
   saveUser(res: AuthReponse) {

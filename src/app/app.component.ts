@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
+import { PushService } from './shared/services/push.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,7 @@ import { Socket } from 'ngx-socket-io';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private pushService: PushService) {
+    this.pushService.initialize();
+  }
 }

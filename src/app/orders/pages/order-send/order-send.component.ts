@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -6,6 +6,7 @@ import {
   LoadingController,
   ToastController,
 } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/cart/services/cart.service';
 import { Product } from '../../../settings/pages/products/interfaces/interface';
 import { OrderService } from '../../services/order.service';
@@ -15,7 +16,7 @@ import { OrderService } from '../../services/order.service';
   templateUrl: './order-send.component.html',
   styleUrls: ['./order-send.component.scss'],
 })
-export class OrderSendComponent implements OnInit {
+export class OrderSendComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   cost = 0;
   location: string;
@@ -25,6 +26,9 @@ export class OrderSendComponent implements OnInit {
     Validators.required,
     Validators.minLength(6),
   ]);
+
+  cartSubs: Subscription;
+  costSubs: Subscription;
 
   constructor(
     private cartService: CartService,
@@ -38,6 +42,16 @@ export class OrderSendComponent implements OnInit {
   async ngOnInit() {
     this.products = this.cartService.cart;
     this.cost = this.cartService.costCart;
+    this.cartSubs = this.cartService.cart$.subscribe(
+      (cart) => (this.products = cart)
+    );
+    this.costSubs = this.cartService.costOfCart$.subscribe(
+      (cost) => (this.cost = cost)
+    );
+  }
+  ngOnDestroy() {
+    this.cartSubs?.unsubscribe();
+    this.costSubs?.unsubscribe();
   }
 
   async sendOrder() {

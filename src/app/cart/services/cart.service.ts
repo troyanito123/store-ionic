@@ -17,6 +17,7 @@ export class CartService {
   cantInCart$: EventEmitter<number> = new EventEmitter();
   costOfCart$: EventEmitter<number> = new EventEmitter();
   deleteProductFromCart$: EventEmitter<number> = new EventEmitter();
+  cart$: EventEmitter<Product[]> = new EventEmitter();
 
   get cart() {
     return this._cart;
@@ -126,6 +127,7 @@ export class CartService {
     );
     this.costOfCart$.emit(this._costCart);
     this.cantInCart$.emit(this.cantInCart);
+    this.cart$.emit(this._cart);
     localStorage.setItem('cart', JSON.stringify(this._cart));
     localStorage.setItem('cant', this._cantInCart.toString());
     localStorage.setItem('cost', this.costCart.toString());

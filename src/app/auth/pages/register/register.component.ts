@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ViewWillEnter } from '@ionic/angular';
 import { EmailValidatorService } from 'src/app/shared/services/email-validator.service';
+import { PushService } from 'src/app/shared/services/push.service';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { ValidatorService } from 'src/app/shared/services/validator.service';
 import { AuthService } from '../../services/auth.service';
@@ -11,10 +13,12 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, ViewWillEnter {
   registerForm: FormGroup;
   emailPattern: string;
   isLoading = false;
+
+  pushId: string;
 
   constructor(
     private fb: FormBuilder,
@@ -22,13 +26,22 @@ export class RegisterComponent implements OnInit {
     private emailValidatorService: EmailValidatorService,
     private validatorService: ValidatorService,
     private authService: AuthService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private pushSerice: PushService
   ) {
     this.emailPattern = this.validatorService.emailPattern;
     this.createForm();
   }
 
-  ngOnInit() {}
+  async ionViewWillEnter() {
+    const info = await this.pushSerice.getPushId();
+    this.pushId = info.userId;
+  }
+
+  async ngOnInit() {
+    const info = await this.pushSerice.getPushId();
+    this.pushId = info.userId;
+  }
 
   register() {
     if (this.registerForm.invalid) {
@@ -42,6 +55,9 @@ export class RegisterComponent implements OnInit {
       .subscribe(async (success) => {
         this.isLoading = false;
         if (success) {
+          if (this.pushId) {
+            this.authService.updatedPushId(this.pushId).subscribe();
+          }
           this.registerForm.reset();
           this.router.navigate(['tabs']);
         } else {

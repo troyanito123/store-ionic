@@ -29,9 +29,12 @@ export class PushService {
     this.oneSignal.getIds().then((info) => {
       this.pushId = info.userId;
       localStorage.setItem('pushId', this.pushId);
-      console.log('pushId', this.pushId);
     });
 
     this.oneSignal.endInit();
+  }
+
+  getPushId() {
+    return this.oneSignal.getIds();
   }
 }

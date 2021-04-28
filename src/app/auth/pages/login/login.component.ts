@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ViewWillEnter } from '@ionic/angular';
+import { PushService } from 'src/app/shared/services/push.service';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { ValidatorService } from 'src/app/shared/services/validator.service';
 import { AuthService } from '../../services/auth.service';
@@ -10,23 +12,32 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, ViewWillEnter {
   loginForm: FormGroup;
   emailPattern: string;
   isLoading = false;
+  pushId: string;
 
   constructor(
     private fb: FormBuilder,
     private validatorService: ValidatorService,
     private authService: AuthService,
     private router: Router,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private pushSerice: PushService
   ) {
     this.emailPattern = validatorService.emailPattern;
     this.createForm();
   }
+  async ionViewWillEnter() {
+    const info = await this.pushSerice.getPushId();
+    this.pushId = info.userId;
+  }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    const info = await this.pushSerice.getPushId();
+    this.pushId = info.userId;
+  }
 
   login() {
     if (this.loginForm.invalid) {
@@ -38,9 +49,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe(async (success) => {
       this.isLoading = false;
       if (success) {
-        const pushId = localStorage.getItem('pushId');
-        if (pushId) {
-          this.authService.updatedPushId(pushId).subscribe();
+        if (this.pushId) {
+          this.authService.updatedPushId(this.pushId).subscribe();
         }
         this.loginForm.reset();
         this.router.navigate(['tabs']);

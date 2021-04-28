@@ -27,7 +27,7 @@ export class MapComponent implements OnInit {
     this.map = new Mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/satellite-streets-v11',
-      center: [-66.16090109719788, -17.442175031276946],
+      center: [this.getLng(this.lockLocation), this.getLat(this.lockLocation)],
       zoom: 14.5,
     });
     if (this.lockLocation) {
@@ -52,5 +52,21 @@ export class MapComponent implements OnInit {
     const lng = Number(arr[0]);
     const lat = Number(arr[1]);
     new Mapboxgl.Marker().setLngLat([lng, lat]).addTo(this.map);
+  }
+
+  getLng(location: string) {
+    if (location) {
+      const arr = location.split(',');
+      return Number(arr[0]);
+    }
+    return -66.16090109719788;
+  }
+
+  getLat(location: string) {
+    if (location) {
+      const arr = location.split(',');
+      return Number(arr[1]);
+    }
+    return -17.442175031276946;
   }
 }

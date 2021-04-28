@@ -7,6 +7,7 @@ import { AuthService } from '../auth/services/auth.service';
 import { ProductService } from '../settings/pages/products/services/product.service';
 import { Product } from '../settings/pages/products/interfaces/interface';
 import { SocketService } from '../shared/services/socket.service';
+import { UtilsService } from '../shared/services/utils.service';
 
 @Component({
   selector: 'app-home',
@@ -20,19 +21,19 @@ export class HomePage implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
-    private loadingController: LoadingController,
     private authService: AuthService,
     private router: Router,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private utilsService: UtilsService
   ) {}
 
   async ngOnInit() {
-    const loading = await this.createLoading();
-    await loading.present();
+    const loading = await this.utilsService.createLoading();
+    loading.present();
     this.productsSubs = this.productService
       .getProducts()
       .subscribe(async (products) => {
-        await loading.dismiss();
+        loading.dismiss();
         this.products = products;
       });
     this.socketService.listen('new-order').subscribe((res) => {
@@ -44,16 +45,14 @@ export class HomePage implements OnInit, OnDestroy {
     this.productsSubs?.unsubscribe();
   }
 
-  async createLoading() {
-    return await this.loadingController.create({
-      message: 'Cargando productos ...',
-      backdropDismiss: false,
+  async logout() {
+    const loading = await this.utilsService.createLoading('saliendo ...');
+    loading.present();
+    this.authService.updatedPushId('no-push-id').subscribe(() => {
+      loading.dismiss();
+      this.authService.deleteUser();
+      this.router.navigate(['auth/login']);
     });
-  }
-
-  logout() {
-    this.authService.deleteUser();
-    this.router.navigate(['auth']);
   }
 
   doRefresh(event: any) {

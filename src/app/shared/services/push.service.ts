@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Injectable({
@@ -6,7 +7,7 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
 })
 export class PushService {
   private pushId;
-  constructor(private oneSignal: OneSignal) {}
+  constructor(private oneSignal: OneSignal, private router: Router) {}
 
   initialize() {
     this.oneSignal.startInit(
@@ -22,8 +23,12 @@ export class PushService {
       console.log('Recivido', notification);
     });
 
-    this.oneSignal.handleNotificationOpened().subscribe((notification) => {
-      console.log('Abierto', notification);
+    this.oneSignal.handleNotificationOpened().subscribe((push) => {
+      console.log('Abierto', push);
+      this.router.navigate([
+        'tabs/orders',
+        push.notification.payload.additionalData.orderId,
+      ]);
     });
 
     this.oneSignal.getIds().then((info) => {

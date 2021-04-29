@@ -5,7 +5,11 @@ import { catchError, map } from 'rxjs/operators';
 import { User } from 'src/app/auth/interfaces/interface';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Product } from '../../settings/pages/products/interfaces/interface';
-import { Order, OrderFull } from 'src/app/orders/interfaces/interfaces';
+import {
+  Order,
+  OrderFull,
+  OrderStatus,
+} from 'src/app/orders/interfaces/interfaces';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -63,5 +67,12 @@ export class OrderService {
     return this.http
       .post<Order>(`${this.url}/delivered`, { orderId, delivered })
       .pipe(catchError(() => of(null)));
+  }
+
+  changeStatus(orderId: number, status: OrderStatus) {
+    return this.http.put<Order>(`${this.url}/change/status`, {
+      orderId,
+      status,
+    });
   }
 }

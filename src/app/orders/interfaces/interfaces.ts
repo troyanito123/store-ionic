@@ -7,6 +7,7 @@ export interface Order {
   address: string;
   location: string;
   delivered: boolean;
+  status: OrderStatus;
   created_at: Date;
   updated_at: Date;
 }
@@ -17,6 +18,7 @@ export interface OrderFull {
   address: string;
   location: string;
   delivered: boolean;
+  status: OrderStatus;
   created_at: Date;
   updated_at: Date;
   user: User;
@@ -36,4 +38,10 @@ export interface Message {
   body: string;
   isAdmin: boolean;
   created_at: Date;
+}
+
+export enum OrderStatus {
+  new = 'NEW',
+  pending = 'PENDING',
+  delivered = 'DELIVERED',
 }

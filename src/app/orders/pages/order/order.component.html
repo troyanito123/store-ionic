@@ -6,11 +6,12 @@
     <ion-title *ngIf="order">Orden numero {{ order.id }}</ion-title>
 
     <ion-buttons slot="end" *ngIf="order && isAdmin">
-      <ion-label>Pendiente</ion-label>
+      <ion-label *ngIf="delivered">Entregado</ion-label>
+      <ion-label *ngIf="!delivered">Pendiente</ion-label>
       <ion-spinner name="bubbles" *ngIf="isLoading"></ion-spinner>
       <ion-toggle
         [disabled]="isLoading"
-        [checked]="order.delivered"
+        [checked]="delivered"
         (ionChange)="changeDelivered($event)"
       ></ion-toggle>
     </ion-buttons>
@@ -38,7 +39,7 @@
     <app-messages
       [messages]="order.messages"
       [orderId]="order.id"
-      [delivered]="order.delivered"
+      [delivered]="delivered"
     ></app-messages>
   </div>
 </ion-content>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { UtilsService } from 'src/app/shared/services/utils.service';
-import { Order } from '../../interfaces/interfaces';
+import { Order, OrderStatus } from '../../interfaces/interfaces';
 import { OrderService } from '../../services/order.service';
 
 @Component({
@@ -45,5 +45,15 @@ export class OrderListComponent implements OnInit, OnDestroy, ViewWillEnter {
       this.orders = orders;
       event.target.complete();
     });
+  }
+
+  colorStatus(status: OrderStatus) {
+    if (status === OrderStatus.new) {
+      return 'tertiary';
+    } else if (status === OrderStatus.pending) {
+      return 'warning';
+    } else if (status === OrderStatus.delivered) {
+      return 'success';
+    }
   }
 }

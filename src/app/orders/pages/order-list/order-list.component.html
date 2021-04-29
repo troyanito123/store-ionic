@@ -11,10 +11,15 @@
 
   <ion-list>
     <ion-item *ngFor="let order of orders" (click)="goToOrder(order.id)" detail>
-      <ion-icon slot="start" name="cart-outline"></ion-icon>
+      <ion-avatar slot="start">
+        <span>{{ order.id }}</span>
+      </ion-avatar>
       <ion-label>
         <h2>{{ order.address }}</h2>
         <h3>{{ order.created_at | date }}</h3>
+        <ion-badge [color]="colorStatus(order.status)" mode="md">{{
+          order.status
+        }}</ion-badge>
       </ion-label>
     </ion-item>
   </ion-list>

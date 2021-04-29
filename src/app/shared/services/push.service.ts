@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 
@@ -7,7 +7,12 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
 })
 export class PushService {
   private pushId;
-  constructor(private oneSignal: OneSignal, private router: Router) {}
+
+  constructor(
+    private oneSignal: OneSignal,
+    private router: Router,
+    private _ngZone: NgZone
+  ) {}
 
   initialize() {
     this.oneSignal.startInit(
@@ -25,10 +30,12 @@ export class PushService {
 
     this.oneSignal.handleNotificationOpened().subscribe((push) => {
       console.log('Abierto', push);
-      this.router.navigate([
-        'tabs/orders',
-        push.notification.payload.additionalData.orderId,
-      ]);
+      this._ngZone.run(() =>
+        this.router.navigate([
+          'tabs/orders',
+          push.notification.payload.additionalData.orderId,
+        ])
+      );
     });
 
     this.oneSignal.getIds().then((info) => {

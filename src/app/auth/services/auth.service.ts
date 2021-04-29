@@ -72,6 +72,8 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('pushId');
     this.cartService.deleteCart();
+    this.actUser$.emit(null);
+    this.actToken$.emit(null);
   }
 
   isAdmin() {

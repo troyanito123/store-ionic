@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/services/auth.service';
 import { ProductService } from '../settings/pages/products/services/product.service';
 import { Product } from '../settings/pages/products/interfaces/interface';
-import { SocketService } from '../shared/services/socket.service';
 import { UtilsService } from '../shared/services/utils.service';
 
 @Component({
@@ -23,7 +21,6 @@ export class HomePage implements OnInit, OnDestroy {
     private productService: ProductService,
     private authService: AuthService,
     private router: Router,
-    private socketService: SocketService,
     private utilsService: UtilsService
   ) {}
 
@@ -36,9 +33,6 @@ export class HomePage implements OnInit, OnDestroy {
         loading.dismiss();
         this.products = products;
       });
-    this.socketService.listen('new-order').subscribe((res) => {
-      console.log(res);
-    });
   }
 
   ngOnDestroy() {

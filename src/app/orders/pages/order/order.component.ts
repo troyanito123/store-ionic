@@ -71,11 +71,10 @@ export class OrderComponent implements OnInit {
   }
 
   async sendNotification() {
-    console.log('send notification');
     const modal = await this.modalController.create({
       component: ModalNotificationComponent,
       componentProps: {
-        userId: this.user.id,
+        userId: this.order.user.id,
         orderId: this.order.id,
       },
     });

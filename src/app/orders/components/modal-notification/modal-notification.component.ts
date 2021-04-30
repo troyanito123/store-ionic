@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { UtilsService } from 'src/app/shared/services/utils.service';
 
 @Component({
   selector: 'app-modal-notification',
@@ -9,13 +11,17 @@ import { ModalController } from '@ionic/angular';
 })
 export class ModalNotificationComponent implements OnInit {
   @Input() userId: number;
-  @Input() orderId: string;
+  @Input() orderId: number;
 
   notificationForm: FormGroup;
 
+  isLoading = false;
+
   constructor(
     private modalController: ModalController,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private notificationServie: NotificationService,
+    private utilsService: UtilsService
   ) {}
 
   ngOnInit() {
@@ -27,7 +33,30 @@ export class ModalNotificationComponent implements OnInit {
       this.notificationForm.markAllAsTouched();
       return;
     }
-    console.log(this.notificationForm.value);
+    this.isLoading = true;
+    const { title, body } = this.notificationForm.value;
+
+    this.notificationServie
+      .sendNotificationToUser(this.userId, this.orderId, title, body)
+      .subscribe(async (success) => {
+        this.isLoading = false;
+        if (success) {
+          this.modalController.dismiss().then(async () => {
+            const toast = await this.utilsService.createToast(
+              'Se envio la notificacion satisfactoriamente!'
+            );
+            toast.present();
+          });
+        } else {
+          this.modalController.dismiss().then(async () => {
+            const alert = await this.utilsService.createAlert(
+              'No se envio la notificacion',
+              'Puede que el usurio no tenga activado el servicio de notificaciones.'
+            );
+            alert.present();
+          });
+        }
+      });
   }
 
   modalDissmiss() {

@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Notificaciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalDissmiss()">
+        <ion-icon slot="start" name="arrow-back-circle-outline"></ion-icon>
+        Regresar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form
+    [formGroup]="notificationForm"
+    autocomplete="off"
+    (ngSubmit)="sendNotification()"
+  >
+    <ion-list>
+      <ion-list-header>
+        <ion-text color="tertiary">
+          <h1>Crea y envia tu notificacion</h1>
+        </ion-text>
+      </ion-list-header>
+      <ion-item>
+        <ion-label
+          *ngIf="!invalidField('title')"
+          color="primary"
+          position="floating"
+          >Titulo Notificacion</ion-label
+        >
+        <ion-label
+          *ngIf="invalidField('title')"
+          color="danger"
+          position="floating"
+          >{{ invalidTitleMsg }}</ion-label
+        >
+        <ion-input
+          type="text"
+          formControlName="title"
+          placeholder="Titulo notificacion"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label
+          *ngIf="!invalidField('body')"
+          color="primary"
+          position="floating"
+          >Cuerpo Notificacion</ion-label
+        >
+        <ion-label
+          *ngIf="invalidField('body')"
+          color="danger"
+          position="floating"
+          >{{ invalidBodyMsg }}</ion-label
+        >
+        <ion-input
+          type="text"
+          formControlName="body"
+          placeholder="Cuerpo notificacion"
+        ></ion-input>
+      </ion-item>
+      <ion-button type="submit" expand="block" shape="round">
+        <ion-icon slot="start" name="send-outline"></ion-icon>
+        Enviar notificacion
+      </ion-button>
+    </ion-list>
+  </form>
+</ion-content>

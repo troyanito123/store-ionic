@@ -14,6 +14,7 @@ import { OrderSendComponent } from './pages/order-send/order-send.component';
 import { MapComponent } from './components/map/map.component';
 import { DetailComponent } from './components/detail/detail.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { ModalNotificationComponent } from './components/modal-notification/modal-notification.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { MessagesComponent } from './components/messages/messages.component';
     MapComponent,
     DetailComponent,
     MessagesComponent,
+    ModalNotificationComponent,
   ],
 })
 export class OrdersPageModule {}

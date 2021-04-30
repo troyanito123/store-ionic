@@ -8,6 +8,9 @@ import { OrderFull, OrderStatus } from '../../interfaces/interfaces';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { OrderService } from '../../services/order.service';
+import { ModalController } from '@ionic/angular';
+import { ModalNotificationComponent } from '../../components/modal-notification/modal-notification.component';
+import { User } from 'src/app/auth/interfaces/interface';
 
 @Component({
   selector: 'app-order',
@@ -18,15 +21,20 @@ export class OrderComponent implements OnInit {
   order: OrderFull;
   isLoading = false;
   delivered = false;
+  user: User;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private authService: AuthService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private modalController: ModalController
   ) {}
 
   async ngOnInit() {
+    this.user = this.authService.user;
+    this.authService.actUser$.subscribe((user) => (this.user = user));
+
     const loading = await this.utilsService.createLoading();
     loading.present();
     this.activatedRoute.params
@@ -60,5 +68,17 @@ export class OrderComponent implements OnInit {
 
   get isAdmin() {
     return this.authService.isAdmin();
+  }
+
+  async sendNotification() {
+    console.log('send notification');
+    const modal = await this.modalController.create({
+      component: ModalNotificationComponent,
+      componentProps: {
+        userId: this.user.id,
+        orderId: this.order.id,
+      },
+    });
+    return await modal.present();
   }
 }

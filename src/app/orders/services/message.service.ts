@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Message } from '../interfaces/interfaces';
 
@@ -13,9 +13,13 @@ export class MessageService {
 
   constructor(private http: HttpClient) {}
 
-  sendMessage(body: string, orderId: number): Observable<Message | null> {
+  sendMessage(
+    body: string,
+    orderId: number,
+    userId: number
+  ): Observable<Message | null> {
     return this.http
-      .post<Message>(this.url, { body, orderId })
+      .post<Message>(this.url, { body, orderId, userId })
       .pipe(catchError(() => of(null)));
   }
 }

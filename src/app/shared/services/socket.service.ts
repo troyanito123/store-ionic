@@ -22,6 +22,7 @@ export class SocketService {
   }
 
   emit(evento: string, payload?: any, callback?: Function) {
+    console.log('emitiendo', evento);
     this.socket.emit(evento, payload, callback);
   }
 

@@ -11,6 +11,7 @@ import { OrderService } from '../../services/order.service';
 import { ModalController } from '@ionic/angular';
 import { ModalNotificationComponent } from '../../components/modal-notification/modal-notification.component';
 import { User } from 'src/app/auth/interfaces/interface';
+import { SocketService } from 'src/app/shared/services/socket.service';
 
 @Component({
   selector: 'app-order',
@@ -28,12 +29,19 @@ export class OrderComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private utilsService: UtilsService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private socketService: SocketService
   ) {}
 
   async ngOnInit() {
     this.user = this.authService.user;
     this.authService.actUser$.subscribe((user) => (this.user = user));
+
+    this.socketService.emit('login', {
+      id: this.user.id,
+      name: this.user.name,
+      role: this.user.role,
+    });
 
     const loading = await this.utilsService.createLoading();
     loading.present();

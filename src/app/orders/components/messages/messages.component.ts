@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { User } from 'src/app/auth/interfaces/interface';
+import { SocketService } from 'src/app/shared/services/socket.service';
 import { Message } from '../../interfaces/interfaces';
 import { MessageService } from '../../services/message.service';
 
@@ -17,9 +17,20 @@ export class MessagesComponent implements OnInit {
 
   messageFiled = new FormControl('', [Validators.required]);
 
-  constructor(private messageService: MessageService) {}
+  constructor(
+    private messageService: MessageService,
+    private socketService: SocketService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.socketService
+      .listen('message-created')
+      .subscribe(({ message, orderId }) => {
+        if (orderId === this.orderId) {
+          this.messages.push(message);
+        }
+      });
+  }
 
   sendMessage() {
     if (this.messageFiled.invalid) {

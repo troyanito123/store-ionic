@@ -34,13 +34,17 @@ export class RegisterComponent implements OnInit, ViewWillEnter {
   }
 
   async ionViewWillEnter() {
-    const info = await this.pushSerice.getPushId();
-    this.pushId = info.userId;
+    if (this.pushSerice.isCordova()) {
+      const info = await this.pushSerice.getPushId();
+      this.pushId = info.userId;
+    }
   }
 
   async ngOnInit() {
-    const info = await this.pushSerice.getPushId();
-    this.pushId = info.userId;
+    if (this.pushSerice.isCordova()) {
+      const info = await this.pushSerice.getPushId();
+      this.pushId = info.userId;
+    }
   }
 
   register() {

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
 import { PushService } from './shared/services/push.service';
 
 @Component({
@@ -9,6 +8,8 @@ import { PushService } from './shared/services/push.service';
 })
 export class AppComponent {
   constructor(private pushService: PushService) {
-    this.pushService.initialize();
+    if (pushService.isCordova()) {
+      this.pushService.initialize();
+    }
   }
 }

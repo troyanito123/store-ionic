@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ViewWillEnter } from '@ionic/angular';
+import { Platform, ViewWillEnter } from '@ionic/angular';
 import { PushService } from 'src/app/shared/services/push.service';
 import { UtilsService } from 'src/app/shared/services/utils.service';
 import { ValidatorService } from 'src/app/shared/services/validator.service';
@@ -30,13 +30,17 @@ export class LoginComponent implements OnInit, ViewWillEnter {
     this.createForm();
   }
   async ionViewWillEnter() {
-    const info = await this.pushSerice.getPushId();
-    this.pushId = info.userId;
+    if (this.pushSerice.isCordova()) {
+      const info = await this.pushSerice.getPushId();
+      this.pushId = info.userId;
+    }
   }
 
   async ngOnInit() {
-    const info = await this.pushSerice.getPushId();
-    this.pushId = info.userId;
+    if (this.pushSerice.isCordova()) {
+      const info = await this.pushSerice.getPushId();
+      this.pushId = info.userId;
+    }
   }
 
   login() {

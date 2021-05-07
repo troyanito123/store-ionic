@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ export class PushService {
   constructor(
     private oneSignal: OneSignal,
     private router: Router,
-    private _ngZone: NgZone
+    private _ngZone: NgZone,
+    private platform: Platform
   ) {}
 
   initialize() {
@@ -48,5 +50,9 @@ export class PushService {
 
   getPushId() {
     return this.oneSignal.getIds();
+  }
+
+  isCordova() {
+    return this.platform.is('cordova');
   }
 }

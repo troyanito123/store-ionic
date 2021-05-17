@@ -6,6 +6,7 @@ import { AuthService } from '../auth/services/auth.service';
 import { ProductService } from '../settings/pages/products/services/product.service';
 import { Product } from '../settings/pages/products/interfaces/interface';
 import { UtilsService } from '../shared/services/utils.service';
+import { User } from '../auth/interfaces/interface';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   productsSubs: Subscription;
 
+  user: User;
+  userSubs: Subscription;
+
   constructor(
     private productService: ProductService,
     private authService: AuthService,
@@ -27,6 +31,10 @@ export class HomePage implements OnInit, OnDestroy {
   async ngOnInit() {
     const loading = await this.utilsService.createLoading();
     loading.present();
+    this.user = this.authService.user;
+    this.userSubs = this.authService.actUser$.subscribe(
+      (user) => (this.user = user)
+    );
     this.productsSubs = this.productService
       .getProducts()
       .subscribe(async (products) => {
@@ -37,12 +45,13 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.productsSubs?.unsubscribe();
+    this.userSubs?.unsubscribe();
   }
 
   async logout() {
     const loading = await this.utilsService.createLoading('saliendo ...');
     loading.present();
-    this.authService.updatedPushId('no-push-id').subscribe(() => {
+    this.authService.deletedPushId(this.user.id).subscribe(() => {
       loading.dismiss();
       this.authService.deleteUser();
       this.router.navigate(['auth/login']);

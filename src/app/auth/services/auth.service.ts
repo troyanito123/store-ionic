@@ -56,6 +56,10 @@ export class AuthService {
     return this.http.post(`${environment.url}/user/push`, { pushId });
   }
 
+  deletedPushId(userId: number) {
+    return this.http.delete(`${environment.url}/user/push/${userId}`);
+  }
+
   saveUser(res: AuthReponse) {
     this._user = res.data;
     this._accessToken = `Bearer ${res.access_token}`;

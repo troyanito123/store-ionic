@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "store-ionic",
+  "appId": "com.jassweb.licorcito",
+  "appName": "Licorcito",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
